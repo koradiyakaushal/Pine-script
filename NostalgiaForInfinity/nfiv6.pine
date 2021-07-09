@@ -22,12 +22,11 @@
 
 SystemName = "NFI v6"
 is_overlay = true
-is_repainting = false
 
 study(SystemName, overlay=is_overlay)
 
 // Functions
-f_security(_symbol, _res, _src, _repaint) => security(_symbol, _res, _src[_repaint ? 0 : barstate.isrealtime ? 1 : 0], lookahead=barmerge.lookahead_on)[_repaint ? 0 : barstate.isrealtime ? 0 : 1]
+f_security(_symbol, _res, _src, _repaint) => security(_symbol, _res, _src[_repaint ? 0 : barstate.isrealtime ? 1 : 0])
 
 ema_difference(window_short, window_long) =>
     sma1 = sma(close, window_short)
@@ -91,14 +90,14 @@ safe_dips_loose = ((((open - close)/close) < buy_dip_threshold_9) and (((highest
 
 // Informative indicators
 
-ema_12_1h  = f_security(syminfo.tickerid, '60', ema(close, 12), is_repainting)
-ema_15_1h  = f_security(syminfo.tickerid, '60', ema(close, 15), is_repainting)
-ema_20_1h  = f_security(syminfo.tickerid, '60', ema(close, 20), is_repainting)
-ema_26_1h  = f_security(syminfo.tickerid, '60', ema(close, 26), is_repainting)
-ema_35_1h  = f_security(syminfo.tickerid, '60', ema(close, 35), is_repainting)
-ema_50_1h  = f_security(syminfo.tickerid, '60', ema(close, 50), is_repainting)
-ema_100_1h = f_security(syminfo.tickerid, '60', ema(close, 100), is_repainting)
-ema_200_1h = f_security(syminfo.tickerid, '60', ema(close, 200), is_repainting)
+ema_12_1h  = security(syminfo.tickerid, '60', ema(close, 12))
+ema_15_1h  = security(syminfo.tickerid, '60', ema(close, 15))
+ema_20_1h  = security(syminfo.tickerid, '60', ema(close, 20))
+ema_26_1h  = security(syminfo.tickerid, '60', ema(close, 26))
+ema_35_1h  = security(syminfo.tickerid, '60', ema(close, 35))
+ema_50_1h  = security(syminfo.tickerid, '60', ema(close, 50))
+ema_100_1h = security(syminfo.tickerid, '60', ema(close, 100))
+ema_200_1h = security(syminfo.tickerid, '60', ema(close, 200))
 
 sma_dec_1h(close, length) => 
     sma_dec = false
@@ -106,10 +105,10 @@ sma_dec_1h(close, length) =>
         sma_dec := true
     sma_dec
 
-sma_200_1h = f_security(syminfo.tickerid, '60', sma(close, 200), is_repainting)
-sma_200_dec_1h = f_security(syminfo.tickerid, '60', sma_dec_1h(close, 200), is_repainting)
+sma_200_1h = security(syminfo.tickerid, '60', sma(close, 200))
+sma_200_dec_1h = security(syminfo.tickerid, '60', sma_dec_1h(close, 200))
 
-rsi_1h = f_security(syminfo.tickerid, '60', rsi(close, 14), is_repainting)
+rsi_1h = security(syminfo.tickerid, '60', rsi(close, 14))
 
 [bb_middleband_1h, bb_upperband_1h, bb_lowerband_1h] = security(syminfo.tickerid, '60', bb(close, 20, 2))
 
@@ -118,7 +117,7 @@ chalkin_money_flow(open, high, low, close, volume, length) =>
     mf = sum(ad, length) / sum(volume, length)
     mf
 
-cmf_1h = f_security(syminfo.tickerid, '60', chalkin_money_flow(open, high, low, close, volume, 20), is_repainting)
+cmf_1h = security(syminfo.tickerid, '60', chalkin_money_flow(open, high, low, close, volume, 20))
 
 range_percent_change(open, close, length) =>
     c = highest(open, length) - lowest(close, length) / lowest(close, length) 
@@ -167,17 +166,17 @@ buy_pump_pull_threshold_9 = 1.4
 buy_pump_threshold_9 = 1.6
 
 
-safe_pump_24_normal = f_security(syminfo.tickerid, '60', safe_pump(open, close, 24, buy_pump_threshold_1, buy_pump_pull_threshold_1), is_repainting)
-safe_pump_36_normal = f_security(syminfo.tickerid, '60', safe_pump(open, close, 36, buy_pump_threshold_2, buy_pump_pull_threshold_2), is_repainting)
-safe_pump_48_normal = f_security(syminfo.tickerid, '60', safe_pump(open, close, 48, buy_pump_threshold_3, buy_pump_pull_threshold_3), is_repainting)
+safe_pump_24_normal = security(syminfo.tickerid, '60', safe_pump(open, close, 24, buy_pump_threshold_1, buy_pump_pull_threshold_1))
+safe_pump_36_normal = security(syminfo.tickerid, '60', safe_pump(open, close, 36, buy_pump_threshold_2, buy_pump_pull_threshold_2))
+safe_pump_48_normal = security(syminfo.tickerid, '60', safe_pump(open, close, 48, buy_pump_threshold_3, buy_pump_pull_threshold_3))
 
-safe_pump_24_strict = f_security(syminfo.tickerid, '60', safe_pump(open, close, 24, buy_pump_threshold_4, buy_pump_pull_threshold_4), is_repainting)
-safe_pump_36_strict = f_security(syminfo.tickerid, '60', safe_pump(open, close, 36, buy_pump_threshold_5, buy_pump_pull_threshold_5), is_repainting)
-safe_pump_48_strict = f_security(syminfo.tickerid, '60', safe_pump(open, close, 48, buy_pump_threshold_6, buy_pump_pull_threshold_6), is_repainting)
+safe_pump_24_strict = security(syminfo.tickerid, '60', safe_pump(open, close, 24, buy_pump_threshold_4, buy_pump_pull_threshold_4))
+safe_pump_36_strict = security(syminfo.tickerid, '60', safe_pump(open, close, 36, buy_pump_threshold_5, buy_pump_pull_threshold_5))
+safe_pump_48_strict = security(syminfo.tickerid, '60', safe_pump(open, close, 48, buy_pump_threshold_6, buy_pump_pull_threshold_6))
 
-safe_pump_24_loose = f_security(syminfo.tickerid, '60', safe_pump(open, close, 24, buy_pump_threshold_7, buy_pump_pull_threshold_7), is_repainting)
-safe_pump_36_loose = f_security(syminfo.tickerid, '60', safe_pump(open, close, 36, buy_pump_threshold_8, buy_pump_pull_threshold_8), is_repainting)
-safe_pump_48_loose = f_security(syminfo.tickerid, '60', safe_pump(open, close, 48, buy_pump_threshold_9, buy_pump_pull_threshold_9), is_repainting)
+safe_pump_24_loose = security(syminfo.tickerid, '60', safe_pump(open, close, 24, buy_pump_threshold_7, buy_pump_pull_threshold_7))
+safe_pump_36_loose = security(syminfo.tickerid, '60', safe_pump(open, close, 36, buy_pump_threshold_8, buy_pump_pull_threshold_8))
+safe_pump_48_loose = security(syminfo.tickerid, '60', safe_pump(open, close, 48, buy_pump_threshold_9, buy_pump_pull_threshold_9))
 
 
 // sell_pump(high, low, length, sell_pump_threshold) =>
@@ -808,9 +807,9 @@ buy_04_logic = (buy_04_protections and (close < ema_50) and (close < (buy_bb20_c
 
 // Buy Condition 5
 
-buy_05_protections = (standard_buy_protection(buy_05_protection__ema_fast, ema_100, ema_200, buy_05_protection__ema_slow, ema_50_1h, ema_200_1h, buy_05_protection__close_above_ema_fast, close, ema_100, buy_05_protection__close_above_ema_slow, ema_200, buy_05_protection__sma200_rising, 50, buy_05_protection__sma200_1h_rising, 50, buy_05_protection__safe_dips, safe_dips_loose, buy_05_protection__safe_pump, safe_pump_36_strict)) and (close > (ema_200_1h *buy_ema_rel_5))
+buy_05_protections = (standard_buy_protection(buy_05_protection__ema_fast, ema_100, ema_200, buy_05_protection__ema_slow, ema_50_1h, ema_200_1h, buy_05_protection__close_above_ema_fast, close, ema_100, buy_05_protection__close_above_ema_slow, ema_200, buy_05_protection__sma200_rising, 50, buy_05_protection__sma200_1h_rising, 50, buy_05_protection__safe_dips, safe_dips_loose, buy_05_protection__safe_pump, safe_pump_36_strict)) and (close > (ema_200_1h * buy_ema_rel_5))
 
-buy_05_logic = (buy_05_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) / open * buy_ema_open_mult_5) and ((ema_26[1] - ema_12[1]) > open / 100) and (close < bb_lowerband * buy_bb_offset_5))
+buy_05_logic = (buy_05_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) / open * buy_ema_open_mult_5) and ((ema_26[1] - ema_12[1]) > (open / 100)) and (close < bb_lowerband * buy_bb_offset_5))
 
 
 // Buy Condition 6
@@ -920,7 +919,6 @@ buy_20_logic = (buy_20_protections and (rsi_5m < buy_rsi_20) and (rsi_1h < buy_r
 
 
 // Buy Condition 21
-// buy_21_protections = ((buy_21_protection__ema_fast ? (ema_50 > ema_200) : true) and (buy_21_protection__ema_slow ? (ema_50_1h > ema_200_1h) : true) and (buy_21_protection__safe_dips ? safe_dips_normal : true) and (buy_21_protection__safe_pump ? safe_pump_24_normal : true) and (buy_21_protection__close_above_ema_slow ? (close > ema_200): true) and (buy_21_protection__sma200_rising ? (sma_200 > sma_200[50]) : true) and (buy_21_protection__sma200_1h_rising ? (sma_200_1h > sma_200_1h[50]) : true) )
 
 buy_21_protections = standard_buy_protection(buy_21_protection__ema_fast, ema_50, ema_200, buy_21_protection__ema_slow, ema_50_1h, ema_200_1h, buy_21_protection__close_above_ema_fast, close, ema_200, buy_21_protection__close_above_ema_slow, ema_200, buy_21_protection__sma200_rising, 50, buy_21_protection__sma200_1h_rising, 50, buy_21_protection__safe_dips, safe_dips_normal, buy_21_protection__safe_pump, safe_pump_24_normal)
 
