@@ -809,7 +809,7 @@ buy_04_logic = (buy_04_protections and (close < ema_50) and (close < (buy_bb20_c
 
 buy_05_protections = (standard_buy_protection(buy_05_protection__ema_fast, ema_100, ema_200, buy_05_protection__ema_slow, ema_50_1h, ema_200_1h, buy_05_protection__close_above_ema_fast, close, ema_100, buy_05_protection__close_above_ema_slow, ema_200, buy_05_protection__sma200_rising, 50, buy_05_protection__sma200_1h_rising, 50, buy_05_protection__safe_dips, safe_dips_loose, buy_05_protection__safe_pump, safe_pump_36_strict)) and (close > (ema_200_1h * buy_ema_rel_5))
 
-buy_05_logic = (buy_05_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) / open * buy_ema_open_mult_5) and ((ema_26[1] - ema_12[1]) > (open / 100)) and (close < bb_lowerband * buy_bb_offset_5))
+buy_05_logic = (buy_05_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) > (open * buy_ema_open_mult_5)) and ((ema_26[1] - ema_12[1]) > (open / 100)) and (close < (bb_lowerband * buy_bb_offset_5)))
 
 
 // Buy Condition 6
