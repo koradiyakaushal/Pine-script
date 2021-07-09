@@ -1,0 +1,994 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © kaushal
+
+// ###########################################################################################################
+// ##                NostalgiaForInfinityV6 by iterativ                                                     ##
+// ##                                                                                                       ##
+// ##    Strategy for Freqtrade https://github.com/freqtrade/freqtrade                                      ##
+// ##                                                                                                       ##
+// ###########################################################################################################
+// ##               DONATIONS                                                                               ##
+// ##                                                                                                       ##
+// ##   Absolutely not required. However, will be accepted as a token of appreciation.                      ##
+// ##                                                                                                       ##
+// ##   BTC: bc1qvflsvddkmxh7eqhc4jyu5z5k6xcw3ay8jl49sk                                                     ##
+// ##   ETH (ERC20): 0x83D3cFb8001BDC5d2211cBeBB8cB3461E5f7Ec91                                             ##
+// ##   BEP20/BSC (ETH, BNB, ...): 0x86A0B21a20b39d16424B7c8003E4A7e12d78ABEe                               ##
+// ##                                                                                                       ##
+// ###########################################################################################################
+
+
+//@version=4
+
+SystemName = "NFI v6"
+is_overlay = true
+is_repainting = false
+
+study(SystemName, overlay=is_overlay)
+
+// Functions
+f_security(_symbol, _res, _src, _repaint) => security(_symbol, _res, _src[_repaint ? 0 : barstate.isrealtime ? 1 : 0], lookahead=barmerge.lookahead_on)[_repaint ? 0 : barstate.isrealtime ? 0 : 1]
+
+ema_difference(window_short, window_long) =>
+    sma1 = sma(close, window_short)
+    sma2 = sma(close, window_long)
+    diff = (sma1 - sma2)/close*100
+    diff
+
+chopiness(length) =>
+    ci = 100 * log10(sum(atr(1), length) / (highest(length) - lowest(length))) / log10(length)
+    ci
+
+// indicators
+
+[mid, upper, lower] = bb(close, 40, 2)
+bbdelta = abs(mid - lower)
+closedelta = abs(close - close[1])
+tail = abs(close - low)
+
+[bb_middleband, bb_upperband, bb_lowerband] = bb(close, 20, 2)
+
+ema_12  = ema(close, 12)
+ema_20  = ema(close, 20)
+ema_26  = ema(close, 26)
+ema_50  = ema(close, 50)
+ema_100 = ema(close, 100)
+ema_200 = ema(close, 200)
+
+sma_5   = sma(close, 5)
+sma_30  = sma(close, 30)
+sma_200 = sma(close, 200)
+sma_200_dec = (sma_200 - sma_200[20])
+
+mfi_5m = mfi(close, 5)
+rsi_5m = rsi(close,14)
+
+ewo_5m = ema_difference(50, 200)
+chop_5m = chopiness(14)
+
+volume_mean_4  = median(volume, 4)[1]
+volume_mean_30 = median(volume, 30)
+
+// Safe Deep Protection
+
+buy_dip_threshold_1 = 0.02
+buy_dip_threshold_2 = 0.14
+buy_dip_threshold_3 = 0.32
+buy_dip_threshold_4 = 0.5
+buy_dip_threshold_5 = 0.15
+buy_dip_threshold_6 = 0.1
+buy_dip_threshold_7 = 0.24
+buy_dip_threshold_8 = 0.42
+buy_dip_threshold_9 = 0.026
+buy_dip_threshold_10 = 0.24
+buy_dip_threshold_11 = 0.42
+buy_dip_threshold_12 = 0.8
+
+safe_dips_normal = ((((open - close)/close) < buy_dip_threshold_1) and (((highest(open, 2) - close)/close) < buy_dip_threshold_2) and (((highest(open, 12) - close) / close) < buy_dip_threshold_3) and (((highest(open, 144) - close) / close) < buy_dip_threshold_4))
+safe_dips_strict = ((((open - close)/close) < buy_dip_threshold_5) and (((highest(open, 2) - close)/close) < buy_dip_threshold_6) and (((highest(open, 12) - close) / close) < buy_dip_threshold_7) and (((highest(open, 144) - close) / close) < buy_dip_threshold_8))
+safe_dips_loose = ((((open - close)/close) < buy_dip_threshold_9) and (((highest(open, 2) - close)/close) < buy_dip_threshold_10) and (((highest(open, 12) - close) / close) < buy_dip_threshold_11) and (((highest(open, 144) - close) / close) < buy_dip_threshold_12))
+
+
+// Informative indicators
+
+ema_12_1h  = f_security(syminfo.tickerid, '60', ema(close, 12), is_repainting)
+ema_15_1h  = f_security(syminfo.tickerid, '60', ema(close, 15), is_repainting)
+ema_20_1h  = f_security(syminfo.tickerid, '60', ema(close, 20), is_repainting)
+ema_26_1h  = f_security(syminfo.tickerid, '60', ema(close, 26), is_repainting)
+ema_35_1h  = f_security(syminfo.tickerid, '60', ema(close, 35), is_repainting)
+ema_50_1h  = f_security(syminfo.tickerid, '60', ema(close, 50), is_repainting)
+ema_100_1h = f_security(syminfo.tickerid, '60', ema(close, 100), is_repainting)
+ema_200_1h = f_security(syminfo.tickerid, '60', ema(close, 200), is_repainting)
+
+sma_dec_1h(close, length) => 
+    sma_dec = false
+    if (sma(close, length) - sma(close, length)[20])
+        sma_dec := true
+    sma_dec
+
+sma_200_1h = f_security(syminfo.tickerid, '60', sma(close, 200), is_repainting)
+sma_200_dec_1h = f_security(syminfo.tickerid, '60', sma_dec_1h(close, 200), is_repainting)
+
+rsi_1h = f_security(syminfo.tickerid, '60', rsi(close, 14), is_repainting)
+
+[bb_middleband_1h, bb_upperband_1h, bb_lowerband_1h] = security(syminfo.tickerid, '60', bb(close, 20, 2))
+
+chalkin_money_flow(open, high, low, close, volume, length) => 
+    ad = close==high and close==low or high==low ? 0 : ((2*close-low-high)/(high-low))*volume
+    mf = sum(ad, length) / sum(volume, length)
+    mf
+
+cmf_1h = f_security(syminfo.tickerid, '60', chalkin_money_flow(open, high, low, close, volume, 20), is_repainting)
+
+range_percent_change(open, close, length) =>
+    c = highest(open, length) - lowest(close, length) / lowest(close, length) 
+    c
+
+range_maxgap_adjusted(open, close, length, pull_thresh) =>
+    mg = highest(open, length) - lowest(close, length) / pull_thresh
+    mg
+
+range_height(close, length) =>
+    h = close - lowest(close, length)
+    h
+
+safe_pump(open, close, length, thresh, pull_thresh) =>
+    is_safe = ((range_percent_change(open, close, length) < thresh) or (range_maxgap_adjusted(open, close, length, pull_thresh) > (range_height(close, length))))
+    is_safe
+
+// 24 hours
+buy_pump_pull_threshold_1 = 1.75
+buy_pump_threshold_1 = 0.6
+// 36 hours
+buy_pump_pull_threshold_2 = 1.75
+buy_pump_threshold_2 = 0.64
+// 48 hours
+buy_pump_pull_threshold_3 = 1.75
+buy_pump_threshold_3 = 0.85
+
+// 24 hours strict
+buy_pump_pull_threshold_4 = 2.2
+buy_pump_threshold_4 = 0.42
+// 36 hours strict
+buy_pump_pull_threshold_5 = 2.0
+buy_pump_threshold_5 = 0.58
+// 48 hours strict
+buy_pump_pull_threshold_6 = 2.0
+buy_pump_threshold_6 = 0.8
+
+// 24 hours loose
+buy_pump_pull_threshold_7 = 1.7
+buy_pump_threshold_7 = 0.66
+// 36 hours loose
+buy_pump_pull_threshold_8 = 1.7
+buy_pump_threshold_8 = 0.7
+// 48 hours loose
+buy_pump_pull_threshold_9 = 1.4
+buy_pump_threshold_9 = 1.6
+
+
+safe_pump_24_normal = f_security(syminfo.tickerid, '60', safe_pump(open, close, 24, buy_pump_threshold_1, buy_pump_pull_threshold_1), is_repainting)
+safe_pump_36_normal = f_security(syminfo.tickerid, '60', safe_pump(open, close, 36, buy_pump_threshold_2, buy_pump_pull_threshold_2), is_repainting)
+safe_pump_48_normal = f_security(syminfo.tickerid, '60', safe_pump(open, close, 48, buy_pump_threshold_3, buy_pump_pull_threshold_3), is_repainting)
+
+safe_pump_24_strict = f_security(syminfo.tickerid, '60', safe_pump(open, close, 24, buy_pump_threshold_4, buy_pump_pull_threshold_4), is_repainting)
+safe_pump_36_strict = f_security(syminfo.tickerid, '60', safe_pump(open, close, 36, buy_pump_threshold_5, buy_pump_pull_threshold_5), is_repainting)
+safe_pump_48_strict = f_security(syminfo.tickerid, '60', safe_pump(open, close, 48, buy_pump_threshold_6, buy_pump_pull_threshold_6), is_repainting)
+
+safe_pump_24_loose = f_security(syminfo.tickerid, '60', safe_pump(open, close, 24, buy_pump_threshold_7, buy_pump_pull_threshold_7), is_repainting)
+safe_pump_36_loose = f_security(syminfo.tickerid, '60', safe_pump(open, close, 36, buy_pump_threshold_8, buy_pump_pull_threshold_8), is_repainting)
+safe_pump_48_loose = f_security(syminfo.tickerid, '60', safe_pump(open, close, 48, buy_pump_threshold_9, buy_pump_pull_threshold_9), is_repainting)
+
+
+// sell_pump(high, low, length, sell_pump_threshold) =>
+//     sp = highest(high, length) - lowest(low, length) / lowest(low, length) > sell_pump_threshold
+
+// sell_pump_48_1 = security(syminfo.tickerid, '60', sell_pump(high, low, 48, sell_pump_threshold_1))
+// sell_pump_48_2 = security(syminfo.tickerid, '60', sell_pump(high, low, 48, sell_pump_threshold_2))
+// sell_pump_48_3 = security(syminfo.tickerid, '60', sell_pump(high, low, 48, sell_pump_threshold_3))
+
+// sell_pump_36_1 = security(syminfo.tickerid, '60', sell_pump(high, low, 36, sell_pump_threshold_4))
+// sell_pump_36_2 = security(syminfo.tickerid, '60', sell_pump(high, low, 36, sell_pump_threshold_5))
+// sell_pump_36_3 = security(syminfo.tickerid, '60', sell_pump(high, low, 36, sell_pump_threshold_6))
+
+// sell_pump_24_1 = security(syminfo.tickerid, '60', sell_pump(high, low, 24, sell_pump_threshold_7))
+// sell_pump_24_2 = security(syminfo.tickerid, '60', sell_pump(high, low, 24, sell_pump_threshold_8))
+// sell_pump_24_3 = security(syminfo.tickerid, '60', sell_pump(high, low, 24, sell_pump_threshold_9))
+
+
+// #############################################################
+// Buy variables
+
+buy_condition_1_enable                      =  true
+buy_01_protection__ema_fast                 =  true
+buy_01_protection__ema_fast_len             =  26
+buy_01_protection__ema_slow                 =  true
+buy_01_protection__ema_slow_len             =  100
+buy_01_protection__close_above_ema_fast     =  true
+buy_01_protection__close_above_ema_fast_len =  200
+buy_01_protection__close_above_ema_slow     =  false
+buy_01_protection__close_above_ema_slow_len =  200
+buy_01_protection__sma200_rising            =  true
+buy_01_protection__sma200_rising_val        =  36
+buy_01_protection__sma200_1h_rising         =  false
+buy_01_protection__sma200_1h_rising_val     =  50
+buy_01_protection__safe_dips                =  true
+buy_01_protection__safe_dips_type           =  "normal"
+buy_01_protection__safe_pump                =  true
+buy_01_protection__safe_pump_type           =  "loose"
+buy_01_protection__safe_pump_period         =  36
+
+buy_condition_2_enable                      =  true
+buy_02_protection__close_above_ema_fast     =  false
+buy_02_protection__close_above_ema_fast_len =  200
+buy_02_protection__close_above_ema_slow     =  false
+buy_02_protection__close_above_ema_slow_len =  200
+buy_02_protection__ema_fast                 =  false
+buy_02_protection__ema_fast_len             =  50
+buy_02_protection__ema_slow                 =  false
+buy_02_protection__ema_slow_len             =  50
+buy_02_protection__safe_dips                =  true
+buy_02_protection__safe_dips_type           =  "normal"
+buy_02_protection__safe_pump                =  false
+buy_02_protection__safe_pump_type           =  "strict"
+buy_02_protection__safe_pump_period         =  24
+buy_02_protection__sma200_rising            =  false
+buy_02_protection__sma200_rising_val        =  50
+buy_02_protection__sma200_1h_rising         =  true
+buy_02_protection__sma200_1h_rising_val     =  50
+
+buy_condition_3_enable                      =  true
+buy_03_protection__close_above_ema_fast     =  false
+buy_03_protection__close_above_ema_fast_len =  200
+buy_03_protection__close_above_ema_slow     =  false
+buy_03_protection__close_above_ema_slow_len =  200
+buy_03_protection__ema_fast                 =  true
+buy_03_protection__ema_fast_len             =  100
+buy_03_protection__ema_slow                 =  true
+buy_03_protection__ema_slow_len             =  100
+buy_03_protection__safe_dips                =  false
+buy_03_protection__safe_dips_type           =  "strict"
+buy_03_protection__safe_pump                =  true
+buy_03_protection__safe_pump_type           =  "loose"
+buy_03_protection__safe_pump_period         =  36
+buy_03_protection__sma200_rising            =  false
+buy_03_protection__sma200_rising_val        =  50
+buy_03_protection__sma200_1h_rising         =  false
+buy_03_protection__sma200_1h_rising_val     =  50
+
+buy_condition_4_enable                      =  true
+buy_04_protection__close_above_ema_fast     =  false
+buy_04_protection__close_above_ema_fast_len =  200
+buy_04_protection__close_above_ema_slow     =  false
+buy_04_protection__close_above_ema_slow_len =  200
+buy_04_protection__ema_fast                 =  false
+buy_04_protection__ema_fast_len             =  50
+buy_04_protection__ema_slow                 =  false
+buy_04_protection__ema_slow_len             =  50
+buy_04_protection__safe_dips                =  true
+buy_04_protection__safe_dips_type           =  "normal"
+buy_04_protection__safe_pump                =  true
+buy_04_protection__safe_pump_type           =  "normal"
+buy_04_protection__safe_pump_period         =  48
+buy_04_protection__sma200_rising            =  true
+buy_04_protection__sma200_rising_val        =  50
+buy_04_protection__sma200_1h_rising         =  true
+buy_04_protection__sma200_1h_rising_val     =  20
+
+buy_condition_5_enable                      =  true
+buy_05_protection__close_above_ema_fast     =  false
+buy_05_protection__close_above_ema_fast_len =  100
+buy_05_protection__close_above_ema_slow     =  false
+buy_05_protection__close_above_ema_slow_len =  200
+buy_05_protection__ema_fast                 =  true
+buy_05_protection__ema_fast_len             =  100
+buy_05_protection__ema_slow                 =  false
+buy_05_protection__ema_slow_len             =  50
+buy_05_protection__safe_dips                =  true
+buy_05_protection__safe_dips_type           =  "loose"
+buy_05_protection__safe_pump                =  true
+buy_05_protection__safe_pump_type           =  "strict"
+buy_05_protection__safe_pump_period         =  36
+buy_05_protection__sma200_rising            =  false
+buy_05_protection__sma200_rising_val        =  50
+buy_05_protection__sma200_1h_rising         =  false
+buy_05_protection__sma200_1h_rising_val     =  50
+
+buy_condition_6_enable                      =  true
+buy_06_protection__ema_fast                 =  false
+buy_06_protection__ema_fast_len             =  50
+buy_06_protection__ema_slow                 =  true
+buy_06_protection__ema_slow_len             =  100
+buy_06_protection__close_above_ema_fast     =  false
+buy_06_protection__close_above_ema_fast_len =  200
+buy_06_protection__close_above_ema_slow     =  false
+buy_06_protection__close_above_ema_slow_len =  200
+buy_06_protection__sma200_rising            =  false
+buy_06_protection__sma200_rising_val        =  50
+buy_06_protection__sma200_1h_rising         =  false
+buy_06_protection__sma200_1h_rising_val     =  50
+buy_06_protection__safe_dips                =  true
+buy_06_protection__safe_dips_type           =  "normal"
+buy_06_protection__safe_pump                =  true
+buy_06_protection__safe_pump_type           =  "strict"
+buy_06_protection__safe_pump_period         =  36
+
+buy_condition_7_enable                      =  true
+buy_07_protection__ema_fast                 =  true
+buy_07_protection__ema_fast_len             =  100
+buy_07_protection__ema_slow                 =  true
+buy_07_protection__ema_slow_len             =  50
+buy_07_protection__close_above_ema_fast     =  false
+buy_07_protection__close_above_ema_fast_len =  200
+buy_07_protection__close_above_ema_slow     =  false
+buy_07_protection__close_above_ema_slow_len =  200
+buy_07_protection__sma200_rising            =  false
+buy_07_protection__sma200_rising_val        =  50
+buy_07_protection__sma200_1h_rising         =  false
+buy_07_protection__sma200_1h_rising_val     =  50
+buy_07_protection__safe_dips                =  true
+buy_07_protection__safe_dips_type           =  "normal"
+buy_07_protection__safe_pump                =  false
+buy_07_protection__safe_pump_type           =  "normal"
+buy_07_protection__safe_pump_period         =  24
+
+buy_condition_8_enable                      =  true
+buy_08_protection__ema_fast                 =  false
+buy_08_protection__ema_fast_len             =  50
+buy_08_protection__ema_slow                 =  true
+buy_08_protection__ema_slow_len             =  50
+buy_08_protection__close_above_ema_fast     =  false
+buy_08_protection__close_above_ema_fast_len =  200
+buy_08_protection__close_above_ema_slow     =  false
+buy_08_protection__close_above_ema_slow_len =  200
+buy_08_protection__sma200_rising            =  false
+buy_08_protection__sma200_rising_val        =  50
+buy_08_protection__sma200_1h_rising         =  false
+buy_08_protection__sma200_1h_rising_val     =  50
+buy_08_protection__safe_dips                =  true
+buy_08_protection__safe_dips_type           =  "loose"
+buy_08_protection__safe_pump                =  true
+buy_08_protection__safe_pump_type           =  "loose"
+buy_08_protection__safe_pump_period         =  24
+
+buy_condition_9_enable                      =  true
+buy_09_protection__ema_fast                 =  true
+buy_09_protection__ema_fast_len             =  100
+buy_09_protection__ema_slow                 =  false
+buy_09_protection__ema_slow_len             =  50
+buy_09_protection__close_above_ema_fast     =  false
+buy_09_protection__close_above_ema_fast_len =  200
+buy_09_protection__close_above_ema_slow     =  false
+buy_09_protection__close_above_ema_slow_len =  200
+buy_09_protection__sma200_rising            =  false
+buy_09_protection__sma200_rising_val        =  50
+buy_09_protection__sma200_1h_rising         =  false
+buy_09_protection__sma200_1h_rising_val     =  50
+buy_09_protection__safe_dips                =  false
+buy_09_protection__safe_dips_type           =  "strict"
+buy_09_protection__safe_pump                =  false
+buy_09_protection__safe_pump_type           =  "normal"
+buy_09_protection__safe_pump_period         =  24
+
+buy_condition_10_enable                     =  true
+buy_10_protection__ema_fast                 =  false
+buy_10_protection__ema_fast_len             =  50
+buy_10_protection__ema_slow                 =  false
+buy_10_protection__ema_slow_len             =  50
+buy_10_protection__close_above_ema_fast     =  false
+buy_10_protection__close_above_ema_fast_len =  200
+buy_10_protection__close_above_ema_slow     =  false
+buy_10_protection__close_above_ema_slow_len =  200
+buy_10_protection__sma200_rising            =  false
+buy_10_protection__sma200_rising_val        =  50
+buy_10_protection__sma200_1h_rising         =  true
+buy_10_protection__sma200_1h_rising_val     =  24
+buy_10_protection__safe_dips                =  true
+buy_10_protection__safe_dips_type           =  "loose"
+buy_10_protection__safe_pump                =  false
+buy_10_protection__safe_pump_type           =  "normal"
+buy_10_protection__safe_pump_period         =  24
+
+buy_condition_11_enable                     =  true
+buy_11_protection__ema_fast                 =  false
+buy_11_protection__ema_fast_len             =  50
+buy_11_protection__ema_slow                 =  false
+buy_11_protection__ema_slow_len             =  50
+buy_11_protection__close_above_ema_fast     =  false
+buy_11_protection__close_above_ema_fast_len =  200
+buy_11_protection__close_above_ema_slow     =  false
+buy_11_protection__close_above_ema_slow_len =  200
+buy_11_protection__sma200_rising            =  false
+buy_11_protection__sma200_rising_val        =  50
+buy_11_protection__sma200_1h_rising         =  false
+buy_11_protection__sma200_1h_rising_val     =  50
+buy_11_protection__safe_dips                =  true
+buy_11_protection__safe_dips_type           =  "loose"
+buy_11_protection__safe_pump                =  true
+buy_11_protection__safe_pump_type           =  "normal"
+buy_11_protection__safe_pump_period         =  24
+
+buy_condition_12_enable                     =  true
+buy_12_protection__ema_fast                 =  false
+buy_12_protection__ema_fast_len             =  50
+buy_12_protection__ema_slow                 =  false
+buy_12_protection__ema_slow_len             =  50
+buy_12_protection__close_above_ema_fast     =  false
+buy_12_protection__close_above_ema_fast_len =  200
+buy_12_protection__close_above_ema_slow     =  false
+buy_12_protection__close_above_ema_slow_len =  200
+buy_12_protection__sma200_rising            =  false
+buy_12_protection__sma200_rising_val        =  50
+buy_12_protection__sma200_1h_rising         =  true
+buy_12_protection__sma200_1h_rising_val     =  24
+buy_12_protection__safe_dips                =  true
+buy_12_protection__safe_dips_type           =  "strict"
+buy_12_protection__safe_pump                =  false
+buy_12_protection__safe_pump_type           =  "normal"
+buy_12_protection__safe_pump_period         =  24
+
+buy_condition_13_enable                     =  true
+buy_13_protection__ema_fast                 =  false
+buy_13_protection__ema_fast_len             =  50
+buy_13_protection__ema_slow                 =  false
+buy_13_protection__ema_slow_len             =  50
+buy_13_protection__close_above_ema_fast     =  false
+buy_13_protection__close_above_ema_fast_len =  200
+buy_13_protection__close_above_ema_slow     =  false
+buy_13_protection__close_above_ema_slow_len =  200
+buy_13_protection__sma200_rising            =  false
+buy_13_protection__sma200_rising_val        =  50
+buy_13_protection__sma200_1h_rising         =  true
+buy_13_protection__sma200_1h_rising_val     =  24
+buy_13_protection__safe_dips                =  true
+buy_13_protection__safe_dips_type           =  "strict"
+buy_13_protection__safe_pump                =  false
+buy_13_protection__safe_pump_type           =  "normal"
+buy_13_protection__safe_pump_period         =  24
+
+buy_condition_14_enable                     =  true
+buy_14_protection__ema_fast                 =  false
+buy_14_protection__ema_fast_len             =  50
+buy_14_protection__ema_slow                 =  false
+buy_14_protection__ema_slow_len             =  50
+buy_14_protection__close_above_ema_fast     =  false
+buy_14_protection__close_above_ema_fast_len =  200
+buy_14_protection__close_above_ema_slow     =  false
+buy_14_protection__close_above_ema_slow_len =  200
+buy_14_protection__sma200_rising            =  true
+buy_14_protection__sma200_rising_val        =  30
+buy_14_protection__sma200_1h_rising         =  true
+buy_14_protection__sma200_1h_rising_val     =  50
+buy_14_protection__safe_dips                =  true
+buy_14_protection__safe_dips_type           =  "strict"
+buy_14_protection__safe_pump                =  true
+buy_14_protection__safe_pump_type           =  "normal"
+buy_14_protection__safe_pump_period         =  24
+
+buy_condition_15_enable                     =  true
+buy_15_protection__ema_fast                 =  false
+buy_15_protection__ema_fast_len             =  50
+buy_15_protection__ema_slow                 =  true
+buy_15_protection__ema_slow_len             =  50
+buy_15_protection__close_above_ema_fast     =  false
+buy_15_protection__close_above_ema_fast_len =  200
+buy_15_protection__close_above_ema_slow     =  false
+buy_15_protection__close_above_ema_slow_len =  200
+buy_15_protection__sma200_rising            =  false
+buy_15_protection__sma200_rising_val        =  50
+buy_15_protection__sma200_1h_rising         =  false
+buy_15_protection__sma200_1h_rising_val     =  50
+buy_15_protection__safe_dips                =  true
+buy_15_protection__safe_dips_type           =  "normal"
+buy_15_protection__safe_pump                =  true
+buy_15_protection__safe_pump_type           =  "strict"
+buy_15_protection__safe_pump_period         =  36
+
+buy_condition_16_enable                     =  true
+buy_16_protection__ema_fast                 =  false
+buy_16_protection__ema_fast_len             =  50
+buy_16_protection__ema_slow                 =  true
+buy_16_protection__ema_slow_len             =  50
+buy_16_protection__close_above_ema_fast     =  false
+buy_16_protection__close_above_ema_fast_len =  200
+buy_16_protection__close_above_ema_slow     =  false
+buy_16_protection__close_above_ema_slow_len =  50
+buy_16_protection__sma200_rising            =  false
+buy_16_protection__sma200_rising_val        =  50
+buy_16_protection__sma200_1h_rising         =  false
+buy_16_protection__sma200_1h_rising_val     =  50
+buy_16_protection__safe_dips                =  true
+buy_16_protection__safe_dips_type           =  "strict"
+buy_16_protection__safe_pump                =  true
+buy_16_protection__safe_pump_type           =  "strict"
+buy_16_protection__safe_pump_period         =  24
+
+buy_condition_17_enable                     =  true
+buy_17_protection__ema_fast                 =  false
+buy_17_protection__ema_fast_len             =  50
+buy_17_protection__ema_slow                 =  false
+buy_17_protection__ema_slow_len             =  50
+buy_17_protection__close_above_ema_fast     =  false
+buy_17_protection__close_above_ema_fast_len =  200
+buy_17_protection__close_above_ema_slow     =  false
+buy_17_protection__close_above_ema_slow_len =  200
+buy_17_protection__sma200_rising            =  false
+buy_17_protection__sma200_rising_val        =  50
+buy_17_protection__sma200_1h_rising         =  false
+buy_17_protection__sma200_1h_rising_val     =  50
+buy_17_protection__safe_dips                =  true
+buy_17_protection__safe_dips_type           =  "strict"
+buy_17_protection__safe_pump                =  true
+buy_17_protection__safe_pump_type           =  "loose"
+buy_17_protection__safe_pump_period         =  24
+
+buy_condition_18_enable                     =  true
+buy_18_protection__ema_fast                 =  true
+buy_18_protection__ema_fast_len             =  100
+buy_18_protection__ema_slow                 =  true
+buy_18_protection__ema_slow_len             =  50
+buy_18_protection__close_above_ema_fast     =  false
+buy_18_protection__close_above_ema_fast_len =  200
+buy_18_protection__close_above_ema_slow     =  true
+buy_18_protection__close_above_ema_slow_len =  200
+buy_18_protection__sma200_rising            =  true
+buy_18_protection__sma200_rising_val        =  44
+buy_18_protection__sma200_1h_rising         =  true
+buy_18_protection__sma200_1h_rising_val     =  72
+buy_18_protection__safe_dips                =  true
+buy_18_protection__safe_dips_type           =  "normal"
+buy_18_protection__safe_pump                =  true
+buy_18_protection__safe_pump_type           =  "strict"
+buy_18_protection__safe_pump_period         =  24
+
+buy_condition_19_enable                     =  true
+buy_19_protection__ema_fast                 =  false
+buy_19_protection__ema_fast_len             =  50
+buy_19_protection__ema_slow                 =  true
+buy_19_protection__ema_slow_len             =  100
+buy_19_protection__close_above_ema_fast     =  false
+buy_19_protection__close_above_ema_fast_len =  200
+buy_19_protection__close_above_ema_slow     =  false
+buy_19_protection__close_above_ema_slow_len =  200
+buy_19_protection__sma200_rising            =  true
+buy_19_protection__sma200_rising_val        =  36
+buy_19_protection__sma200_1h_rising         =  false
+buy_19_protection__sma200_1h_rising_val     =  50
+buy_19_protection__safe_dips                =  true
+buy_19_protection__safe_dips_type           =  "normal"
+buy_19_protection__safe_pump                =  true
+buy_19_protection__safe_pump_type           =  "normal"
+buy_19_protection__safe_pump_period         =  24
+
+buy_condition_20_enable                     =  true
+buy_20_protection__ema_fast                 =  false
+buy_20_protection__ema_fast_len             =  50
+buy_20_protection__ema_slow                 =  true
+buy_20_protection__ema_slow_len             =  50
+buy_20_protection__close_above_ema_fast     =  false
+buy_20_protection__close_above_ema_fast_len =  200
+buy_20_protection__close_above_ema_slow     =  false
+buy_20_protection__close_above_ema_slow_len =  200
+buy_20_protection__sma200_rising            =  false
+buy_20_protection__sma200_rising_val        =  50
+buy_20_protection__sma200_1h_rising         =  false
+buy_20_protection__sma200_1h_rising_val     =  50
+buy_20_protection__safe_dips                =  false
+buy_20_protection__safe_dips_type           =  "strict"
+buy_20_protection__safe_pump                =  false
+buy_20_protection__safe_pump_type           =  "normal"
+buy_20_protection__safe_pump_period         =  24
+
+buy_condition_21_enable                     =  true
+buy_21_protection__ema_fast                 =  false
+buy_21_protection__ema_fast_len             =  50
+buy_21_protection__ema_slow                 =  true
+buy_21_protection__ema_slow_len             =  50
+buy_21_protection__close_above_ema_fast     =  false
+buy_21_protection__close_above_ema_fast_len =  200
+buy_21_protection__close_above_ema_slow     =  false
+buy_21_protection__close_above_ema_slow_len =  200
+buy_21_protection__sma200_rising            =  false
+buy_21_protection__sma200_rising_val        =  50
+buy_21_protection__sma200_1h_rising         =  false
+buy_21_protection__sma200_1h_rising_val     =  50
+buy_21_protection__safe_dips                =  true
+buy_21_protection__safe_dips_type           =  "normal"
+buy_21_protection__safe_pump                =  false
+buy_21_protection__safe_pump_type           =  "normal"
+buy_21_protection__safe_pump_period         =  24
+
+buy_condition_22_enable                     =  true
+buy_22_protection__ema_fast                 =  false
+buy_22_protection__ema_fast_len             =  50
+buy_22_protection__ema_slow                 =  false
+buy_22_protection__ema_slow_len             =  50
+buy_22_protection__close_above_ema_fast     =  false
+buy_22_protection__close_above_ema_fast_len =  200
+buy_22_protection__close_above_ema_slow     =  false
+buy_22_protection__close_above_ema_slow_len =  200
+buy_22_protection__sma200_rising            =  false
+buy_22_protection__sma200_rising_val        =  50
+buy_22_protection__sma200_1h_rising         =  false
+buy_22_protection__sma200_1h_rising_val     =  50
+buy_22_protection__safe_dips                =  false
+buy_22_protection__safe_dips_type           =  "strict"
+buy_22_protection__safe_pump                =  false
+buy_22_protection__safe_pump_type           =  "normal"
+buy_22_protection__safe_pump_period         =  24
+
+buy_condition_23_enable                     =  true
+buy_23_protection__ema_fast                 =  false
+buy_23_protection__ema_fast_len             =  50
+buy_23_protection__ema_slow                 =  false
+buy_23_protection__ema_slow_len             =  50
+buy_23_protection__close_above_ema_fast     =  true
+buy_23_protection__close_above_ema_fast_len =  200
+buy_23_protection__close_above_ema_slow     =  true
+buy_23_protection__close_above_ema_slow_len =  200
+buy_23_protection__sma200_rising            =  false
+buy_23_protection__sma200_rising_val        =  50
+buy_23_protection__sma200_1h_rising         =  false
+buy_23_protection__sma200_1h_rising_val     =  50
+buy_23_protection__safe_dips                =  true
+buy_23_protection__safe_dips_type           =  "loose"
+buy_23_protection__safe_pump                =  false
+buy_23_protection__safe_pump_type           =  "normal"
+buy_23_protection__safe_pump_period         =  24
+
+buy_condition_24_enable                     =  true
+buy_24_protection__ema_fast                 =  true
+buy_24_protection__ema_fast_len             =  50
+buy_24_protection__ema_slow                 =  false
+buy_24_protection__ema_slow_len             =  50
+buy_24_protection__close_above_ema_fast     =  false
+buy_24_protection__close_above_ema_fast_len =  200
+buy_24_protection__close_above_ema_slow     =  false
+buy_24_protection__close_above_ema_slow_len =  200
+buy_24_protection__sma200_rising            =  true
+buy_24_protection__sma200_rising_val        =  30
+buy_24_protection__sma200_1h_rising         =  true
+buy_24_protection__sma200_1h_rising_val     =  36
+buy_24_protection__safe_dips                =  true
+buy_24_protection__safe_dips_type           =  "strict"
+buy_24_protection__safe_pump                =  false
+buy_24_protection__safe_pump_type           =  "normal"
+buy_24_protection__safe_pump_period         =  24
+
+
+buy_min_inc_1 = 0.022
+buy_rsi_1h_min_1 = 32
+buy_rsi_1h_max_1 = 84
+buy_rsi_1 = 36
+buy_mfi_1 = 36
+
+buy_rsi_1h_min_2 = 32.0
+buy_rsi_1h_max_2 = 84.0
+buy_rsi_1h_diff_2 = 39.0
+buy_mfi_2 = 49.0
+buy_bb_offset_2 = 0.983
+
+buy_bb40_bbdelta_close_3 = 0.057
+buy_bb40_closedelta_close_3 = 0.023
+buy_bb40_tail_bbdelta_3 = 0.418
+buy_ema_rel_3 = 0.986
+
+buy_bb20_close_bblowerband_4 = 0.979
+buy_bb20_volume_4 =10.0
+
+buy_ema_rel_5 = 0.982
+buy_ema_open_mult_5 = 0.018
+buy_bb_offset_5 = 0.996
+
+buy_ema_open_mult_6 = 0.024
+buy_bb_offset_6 = 0.984
+
+buy_ema_open_mult_7 = 0.03
+buy_rsi_7 = 36.0
+
+buy_volume_8 = 2.0
+buy_rsi_8 = 20.0
+buy_tail_diff_8 = 3.5
+
+buy_ma_offset_9 = 0.922
+buy_bb_offset_9 = 0.965
+buy_rsi_1h_min_9 = 30.0
+buy_rsi_1h_max_9 = 88.0
+buy_mfi_9 = 50.0
+
+buy_ma_offset_10 = 0.948
+buy_bb_offset_10 = 0.994
+buy_rsi_1h_10 = 37.0
+
+buy_ma_offset_11 = 0.939
+buy_min_inc_11 = 0.01
+buy_rsi_1h_min_11 = 56.0
+buy_rsi_1h_max_11 = 84.0
+buy_rsi_11 = 48.0
+buy_mfi_11 = 36.0
+
+buy_ma_offset_12 = 0.922
+buy_rsi_12 = 30.0
+buy_ewo_12 = 1.8
+
+buy_ma_offset_13 = 0.99
+buy_ewo_13 = -11.8
+
+buy_ema_open_mult_14 = 0.014
+buy_bb_offset_14 =  0.988
+buy_ma_offset_14 = 0.98
+
+buy_ema_open_mult_15 = 0.018
+buy_ma_offset_15 = 0.954
+buy_rsi_15 = 28.0
+buy_ema_rel_15 = 0.988
+
+buy_ma_offset_16 = 0.952
+buy_rsi_16 = 31.0
+buy_ewo_16 = 2.8
+
+buy_ma_offset_17 = 0.952
+buy_ewo_17 = -12.0
+
+buy_rsi_18 = 26.0
+buy_bb_offset_18 = 0.982
+
+buy_rsi_1h_min_19 = 50.0
+buy_chop_min_19 = 24.1
+
+buy_rsi_20 = 27.0
+buy_rsi_1h_20 = 20.0
+
+buy_rsi_21 = 23.0
+buy_rsi_1h_21 = 24.0
+
+buy_volume_22 = 3.0
+buy_bb_offset_22 =  0.98
+buy_ma_offset_22 = 0.94
+buy_ewo_22 =  4.2
+buy_rsi_22 = 37.0
+
+buy_bb_offset_23 =  0.987
+buy_ewo_23 =  7.0
+buy_rsi_23 = 30.0
+buy_rsi_1h_23 = 70.0
+
+buy_24_rsi_max = 60.0
+buy_24_rsi_1h_min = 66.9
+
+
+// #############################################################
+// Sell variables
+
+sell_rsi_bb_1          = 79.5
+sell_rsi_bb_2          = 81
+sell_rsi_main_3        = 82
+sell_dual_rsi_rsi_4    = 73.4
+sell_dual_rsi_rsi_1h_4 = 79.6
+sell_ema_relative_5    = 0.024
+sell_rsi_diff_5        = 4.4
+sell_rsi_under_6       = 79.0
+sell_rsi_1h_7          = 81.7
+sell_bb_relative_8     = 1.1
+
+
+// Protections
+standard_buy_protection(buy_protection__ema_fast, ema_1, ema_2, buy_protection__ema_slow, ema_3, ema_4, buy_protection__close_above_ema_fast, close, ema_5, buy_protection__close_above_ema_slow, ema_6, buy_protection__sma200_rising, sma_rising_value, buy_protection__sma200_1h_rising, sma_1h_rising_value, buy_protection__safe_dips, safe_dips, buy_protection__safe_pump, safe_pump) =>
+    i = ((buy_protection__ema_fast ? (ema_1 > ema_2) : true) and (buy_protection__ema_slow ? (ema_3 > ema_4) : true) and (buy_protection__close_above_ema_fast ? (close > ema_5) : true) and (buy_protection__close_above_ema_slow ? (close > ema_6): true) and (buy_protection__sma200_rising ? (sma_200 > sma_200[sma_rising_value]) : true) and (buy_protection__sma200_1h_rising ? (sma_200_1h > sma_200_1h[sma_1h_rising_value]) : true) and (buy_protection__safe_dips ? safe_dips : true) and (buy_protection__safe_pump ? safe_pump : true))
+    i
+
+// #############################################################
+// Buy Condition 1
+
+buy_01_protections = standard_buy_protection(buy_01_protection__ema_fast, ema_26, ema_200, buy_01_protection__ema_slow, ema_100_1h, ema_200_1h, buy_01_protection__close_above_ema_fast, close, ema_200, buy_01_protection__close_above_ema_slow, ema_200, buy_01_protection__sma200_rising, 36, buy_01_protection__sma200_1h_rising, 50, buy_01_protection__safe_dips, safe_dips_normal, buy_01_protection__safe_pump, safe_pump_36_loose)
+
+buy_01_logic = (buy_01_protections and (((close - lowest(open, 36))/lowest(open, 36)) > buy_min_inc_1) and (rsi_1h > buy_rsi_1h_min_1) and (rsi_1h < buy_rsi_1h_max_1) and (rsi_5m < buy_rsi_1) and (mfi_5m < buy_mfi_1))
+
+
+// Buy Condition 2
+
+buy_02_protections = standard_buy_protection(buy_02_protection__ema_fast, ema_50, ema_200, buy_02_protection__ema_slow, ema_50_1h, ema_200_1h, buy_02_protection__close_above_ema_fast, close, ema_200, buy_02_protection__close_above_ema_slow, ema_200, buy_02_protection__sma200_rising, 50, buy_02_protection__sma200_1h_rising, 50, buy_02_protection__safe_dips, safe_dips_normal, buy_02_protection__safe_pump, safe_pump_24_strict)
+
+buy_02_logic = (buy_02_protections and ((rsi_5m < (rsi_1h * buy_rsi_1h_diff_2)) and (mfi_5m < buy_mfi_2) and (close < (bb_lowerband * buy_bb_offset_2))))
+
+
+// Buy Condition 3
+
+buy_03_protections = standard_buy_protection(buy_03_protection__ema_fast, ema_100, ema_200, buy_03_protection__ema_slow, ema_100_1h, ema_200_1h, buy_03_protection__close_above_ema_fast, close, ema_200, buy_03_protection__close_above_ema_slow, ema_200, buy_03_protection__sma200_rising, 50, buy_03_protection__sma200_1h_rising, 50, buy_03_protection__safe_dips, safe_dips_strict, buy_03_protection__safe_pump, safe_pump_36_loose) and (close < (ema_200_1h * buy_ema_rel_3))
+
+buy_03_logic = (buy_03_protections and (lower[1] > 0) and (bbdelta < (close * buy_bb40_bbdelta_close_3)) and (closedelta > (close*buy_bb40_closedelta_close_3)) and (tail < (bbdelta * buy_bb40_tail_bbdelta_3)) and (close < lower[1]) and (close < close[1]))
+
+
+// Buy Condition 4
+
+buy_04_protections = standard_buy_protection(buy_04_protection__ema_fast, ema_50, ema_200, buy_04_protection__ema_slow, ema_50_1h, ema_200_1h, buy_04_protection__close_above_ema_fast, close, ema_200, buy_04_protection__close_above_ema_slow, ema_200, buy_04_protection__sma200_rising, 50, buy_04_protection__sma200_1h_rising, 20, buy_04_protection__safe_dips, safe_dips_normal, buy_04_protection__safe_pump, safe_pump_48_normal)
+
+buy_04_logic = (buy_04_protections and (close < ema_50) and (close < (buy_bb20_close_bblowerband_4 * bb_lowerband)) and (volume < (volume_mean_30[1]*buy_bb20_volume_4)))
+
+
+// Buy Condition 5
+
+buy_05_protections = (standard_buy_protection(buy_05_protection__ema_fast, ema_100, ema_200, buy_05_protection__ema_slow, ema_50_1h, ema_200_1h, buy_05_protection__close_above_ema_fast, close, ema_100, buy_05_protection__close_above_ema_slow, ema_200, buy_05_protection__sma200_rising, 50, buy_05_protection__sma200_1h_rising, 50, buy_05_protection__safe_dips, safe_dips_loose, buy_05_protection__safe_pump, safe_pump_36_strict)) and (close > (ema_200_1h *buy_ema_rel_5))
+
+buy_05_logic = (buy_05_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) / open * buy_ema_open_mult_5) and ((ema_26[1] - ema_12[1]) > open / 100) and (close < bb_lowerband * buy_bb_offset_5))
+
+
+// Buy Condition 6
+
+buy_06_protections = standard_buy_protection(buy_06_protection__ema_fast, ema_50, ema_200, buy_06_protection__ema_slow, ema_100_1h, ema_200_1h, buy_06_protection__close_above_ema_fast, close, ema_200, buy_06_protection__close_above_ema_slow, ema_200, buy_06_protection__sma200_rising, 50, buy_06_protection__sma200_1h_rising, 50, buy_06_protection__safe_dips, safe_dips_normal, buy_06_protection__safe_pump, safe_pump_36_strict)
+
+buy_06_logic = (buy_06_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) > (open * buy_ema_open_mult_6)) and ((ema_26[1] - ema_12[1]) > (open/100)) and (close < (bb_lowerband * buy_bb_offset_6)))
+
+        
+// Buy Condition 7
+
+buy_07_protections = standard_buy_protection(buy_07_protection__ema_fast, ema_100, ema_200, buy_07_protection__ema_slow, ema_50_1h, ema_200_1h, buy_07_protection__close_above_ema_fast, close, ema_200, buy_07_protection__close_above_ema_slow, ema_200, buy_07_protection__sma200_rising, 50, buy_07_protection__sma200_1h_rising, 50, buy_07_protection__safe_dips, safe_dips_normal, buy_07_protection__safe_pump, safe_pump_24_normal)
+
+buy_07_logic = (buy_07_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) > (open * buy_ema_open_mult_7)) and ((ema_26[1] - ema_12[1]) > (open/100)) and (rsi_5m < buy_rsi_7))
+
+
+// Buy Condition 8
+
+buy_08_protections = standard_buy_protection(buy_08_protection__ema_fast, ema_50, ema_200, buy_08_protection__ema_slow, ema_50_1h, ema_200_1h, buy_08_protection__close_above_ema_fast, close, ema_200, buy_08_protection__close_above_ema_slow, ema_200, buy_08_protection__sma200_rising, 50, buy_08_protection__sma200_1h_rising, 50, buy_08_protection__safe_dips, safe_dips_loose, buy_08_protection__safe_pump, safe_pump_24_loose)
+
+buy_08_logic = (buy_08_protections and (rsi_5m < buy_rsi_8) and (volume > (volume[1] * buy_volume_8)) and (close > open) and ((close-low) > ((close-open) * buy_tail_diff_8)))
+
+
+// Buy Condition 9
+
+buy_09_protections = (standard_buy_protection(buy_09_protection__ema_fast, ema_100, ema_200, buy_09_protection__ema_slow, ema_50_1h, ema_200_1h, buy_09_protection__close_above_ema_fast, close, ema_200, buy_09_protection__close_above_ema_slow, ema_200, buy_09_protection__sma200_rising, 50, buy_09_protection__sma200_1h_rising, 50, buy_09_protection__safe_dips, safe_dips_strict, buy_09_protection__safe_pump, safe_pump_24_normal)) and (ema_50 > ema_200)
+
+buy_09_logic = ((close < (ema_20 * buy_ma_offset_9)) and (close < (bb_lowerband * buy_ma_offset_9)) and (rsi_1h > buy_rsi_1h_min_9) and (mfi_5m < buy_mfi_9))
+
+
+// Buy Condition 10
+
+buy_10_protections = (standard_buy_protection(buy_10_protection__ema_fast, ema_50, ema_200, buy_10_protection__ema_slow, ema_50_1h, ema_200_1h, buy_10_protection__close_above_ema_fast, close, ema_200, buy_10_protection__close_above_ema_slow, ema_200, buy_10_protection__sma200_rising, 50, buy_10_protection__sma200_1h_rising, 24, buy_10_protection__safe_dips, safe_dips_loose, buy_10_protection__safe_pump, safe_pump_24_normal) and (ema_50_1h > ema_100_1h))
+
+buy_10_logic = (buy_10_protections and (close < (sma_30 * buy_ma_offset_10)) and (close < (bb_lowerband * buy_bb_offset_10)) and (rsi_1h < buy_rsi_1h_10))
+
+
+// Buy Condition 11
+
+buy_11_protections = (standard_buy_protection(buy_11_protection__ema_fast, ema_50, ema_200, buy_11_protection__ema_slow, ema_50_1h, ema_200_1h, buy_11_protection__close_above_ema_fast, close, ema_200, buy_11_protection__close_above_ema_slow, ema_200, buy_11_protection__sma200_rising, 50, buy_11_protection__sma200_1h_rising, 50, buy_11_protection__safe_dips, safe_dips_loose, buy_11_protection__safe_pump, safe_pump_24_normal) and (ema_50_1h > ema_100_1h) and (safe_pump_36_normal) and (safe_pump_48_loose))
+
+buy_11_logic = (buy_11_protections and ((close-lowest(open, 36))/(lowest(open, 36)) > buy_min_inc_11) and (close < (sma_30 * buy_ma_offset_11)) and (rsi_1h > buy_rsi_1h_min_11) and (rsi_1h < buy_rsi_1h_max_11) and (mfi_5m < buy_mfi_11))
+
+
+// Buy Condition 12
+
+buy_12_protections = standard_buy_protection(buy_12_protection__ema_fast, ema_50, ema_200, buy_12_protection__ema_slow, ema_50_1h, ema_200_1h, buy_12_protection__close_above_ema_fast, close, ema_200, buy_12_protection__close_above_ema_slow, ema_200, buy_12_protection__sma200_rising, 50, buy_12_protection__sma200_1h_rising, 24, buy_12_protection__safe_dips, safe_dips_strict, buy_12_protection__safe_pump, safe_pump_24_normal)
+
+buy_12_logic = (buy_12_protections and (close < (sma_30 * buy_ma_offset_12)) and (ewo_5m > buy_ewo_12) and (rsi_5m < buy_rsi_12))
+
+
+// Buy Condition 13
+
+buy_13_protections = (standard_buy_protection(buy_13_protection__ema_fast, ema_50, ema_200, buy_13_protection__ema_slow, ema_50_1h, ema_200_1h, buy_13_protection__close_above_ema_fast, close, ema_200, buy_13_protection__close_above_ema_slow, ema_200, buy_13_protection__sma200_rising, 50, buy_13_protection__sma200_1h_rising, 24, buy_13_protection__safe_dips, safe_dips_strict, buy_13_protection__safe_pump, safe_pump_24_normal) and (ema_50_1h > ema_100_1h) and (safe_pump_36_loose))
+
+buy_13_logic = (buy_13_protections and (close < (sma_30 * buy_ma_offset_13)) and (ewo_5m < buy_ewo_13) )
+
+
+// Buy Condition 14
+
+buy_14_protections = standard_buy_protection(buy_14_protection__ema_fast, ema_50, ema_200, buy_14_protection__ema_slow, ema_50_1h, ema_200_1h, buy_14_protection__close_above_ema_fast, close, ema_200, buy_14_protection__close_above_ema_slow, ema_200, buy_14_protection__sma200_rising, 30, buy_14_protection__sma200_1h_rising, 50, buy_14_protection__safe_dips, safe_dips_strict, buy_14_protection__safe_pump, safe_pump_24_normal)
+
+buy_14_logic = (buy_14_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) > (open * buy_ema_open_mult_14)) and ((ema_26[1] - ema_12[1]) > (open/100)) and (close < (bb_lowerband * buy_bb_offset_14)) and (close < (ema_20 * buy_ma_offset_14)))
+
+
+// Buy Condition 15
+
+buy_15_protections = (standard_buy_protection(buy_15_protection__ema_fast, ema_50, ema_200, buy_15_protection__ema_slow, ema_50_1h, ema_200_1h, buy_15_protection__close_above_ema_fast, close, ema_200, buy_15_protection__close_above_ema_slow, ema_200, buy_15_protection__sma200_rising, 50, buy_15_protection__sma200_1h_rising, 50, buy_15_protection__safe_dips, safe_dips_normal, buy_15_protection__safe_pump, safe_pump_36_strict) and (close < (ema_200_1h * buy_ema_rel_15)))
+
+buy_15_logic = (buy_15_protections and (ema_26 > ema_12) and ((ema_26-ema_12) > (open * buy_ema_open_mult_15)) and ((ema_26[1] - ema_12[1]) > (open/100)) and (rsi_5m < buy_rsi_15) and (close < (ema_20 * buy_ma_offset_15)))
+
+
+// Buy Condition 16
+
+buy_16_protections = standard_buy_protection(buy_16_protection__ema_fast, ema_50, ema_200, buy_16_protection__ema_slow, ema_50_1h, ema_200_1h, buy_16_protection__close_above_ema_fast, close, ema_200, buy_16_protection__close_above_ema_slow, ema_50, buy_16_protection__sma200_rising, 50, buy_16_protection__sma200_1h_rising, 50, buy_16_protection__safe_dips, safe_dips_strict, buy_16_protection__safe_pump, safe_pump_24_strict)
+
+buy_16_logic = (buy_16_protections and (close < (ema_20 * buy_ma_offset_16)) and (ewo_5m > buy_ewo_16) and (rsi_5m < buy_rsi_16))
+
+
+// Buy Condition 17
+
+buy_17_protections = standard_buy_protection(buy_17_protection__ema_fast, ema_50, ema_200, buy_17_protection__ema_slow, ema_50_1h, ema_200_1h, buy_17_protection__close_above_ema_fast, close, ema_200, buy_17_protection__close_above_ema_slow, ema_200, buy_17_protection__sma200_rising, 50, buy_17_protection__sma200_1h_rising, 50, buy_17_protection__safe_dips, safe_dips_strict, buy_17_protection__safe_pump, safe_pump_24_loose)
+
+buy_17_logic = (buy_17_protections and (close < (ema_20 * buy_ma_offset_17)) and (ewo_5m < buy_ewo_17) )
+
+
+// Buy Condition 18
+
+buy_18_protections = (standard_buy_protection(buy_18_protection__ema_fast, ema_100, ema_200, buy_18_protection__ema_slow, ema_50_1h, ema_200_1h, buy_18_protection__close_above_ema_fast, close, ema_200, buy_18_protection__close_above_ema_slow, ema_200, buy_18_protection__sma200_rising, 44, buy_18_protection__sma200_1h_rising, 72, buy_18_protection__safe_dips, safe_dips_normal, buy_18_protection__safe_pump, safe_pump_24_strict) and (ema_100 > ema_200) and (sma_200) > (sma_200[20]) and (sma_200_1h > sma_200_1h[36]))
+
+buy_18_logic = (buy_18_protections and (rsi_5m < buy_rsi_18) and (close < (bb_lowerband * buy_bb_offset_18)))
+
+
+
+// Buy Condition 19
+
+buy_19_protections = (standard_buy_protection(buy_19_protection__ema_fast, ema_50, ema_200, buy_19_protection__ema_slow, ema_100_1h, ema_200_1h, buy_19_protection__close_above_ema_fast, close, ema_200, buy_19_protection__close_above_ema_slow, ema_200, buy_19_protection__sma200_rising, 36, buy_19_protection__sma200_1h_rising, 50, buy_19_protection__safe_dips, safe_dips_normal, buy_19_protection__safe_pump, safe_pump_24_normal) and (ema_50_1h > ema_200_1h))
+
+buy_19_logic = (buy_19_protections and (close[1] > ema_100_1h) and (low < ema_100_1h) and (close < ema_100_1h) and (rsi_1h > buy_rsi_1h_min_19) and (chop_5m < buy_chop_min_19))
+
+
+// Buy Condition 20
+
+buy_20_protections = standard_buy_protection(buy_20_protection__ema_fast, ema_50, ema_200, buy_20_protection__ema_slow, ema_50_1h, ema_200_1h, buy_20_protection__close_above_ema_fast, close, ema_200, buy_20_protection__close_above_ema_slow, ema_200, buy_20_protection__sma200_rising, 50, buy_20_protection__sma200_1h_rising, 50, buy_20_protection__safe_dips, safe_dips_strict, buy_20_protection__safe_pump, safe_pump_24_normal)
+
+buy_20_logic = (buy_20_protections and (rsi_5m < buy_rsi_20) and (rsi_1h < buy_rsi_1h_20))
+
+
+// Buy Condition 21
+// buy_21_protections = ((buy_21_protection__ema_fast ? (ema_50 > ema_200) : true) and (buy_21_protection__ema_slow ? (ema_50_1h > ema_200_1h) : true) and (buy_21_protection__safe_dips ? safe_dips_normal : true) and (buy_21_protection__safe_pump ? safe_pump_24_normal : true) and (buy_21_protection__close_above_ema_slow ? (close > ema_200): true) and (buy_21_protection__sma200_rising ? (sma_200 > sma_200[50]) : true) and (buy_21_protection__sma200_1h_rising ? (sma_200_1h > sma_200_1h[50]) : true) )
+
+buy_21_protections = standard_buy_protection(buy_21_protection__ema_fast, ema_50, ema_200, buy_21_protection__ema_slow, ema_50_1h, ema_200_1h, buy_21_protection__close_above_ema_fast, close, ema_200, buy_21_protection__close_above_ema_slow, ema_200, buy_21_protection__sma200_rising, 50, buy_21_protection__sma200_1h_rising, 50, buy_21_protection__safe_dips, safe_dips_normal, buy_21_protection__safe_pump, safe_pump_24_normal)
+
+buy_21_logic = (buy_21_protections and (rsi_5m < buy_rsi_21) and (rsi_1h < buy_rsi_1h_21))
+
+
+// Buy Condition 22
+
+buy_22_protections = (standard_buy_protection(buy_22_protection__ema_fast, ema_50, ema_200, buy_22_protection__ema_slow, ema_50_1h, ema_200_1h, buy_22_protection__close_above_ema_fast, close, ema_200, buy_22_protection__close_above_ema_slow, ema_200, buy_22_protection__sma200_rising, 50, buy_22_protection__sma200_1h_rising, 50, buy_22_protection__safe_dips, safe_dips_strict, buy_22_protection__safe_pump, safe_pump_24_normal) and (ema_100_1h > ema_100_1h[12]) and (ema_200_1h > ema_200_1h[36]) )
+
+buy_22_logic = (buy_22_protections and ((volume_mean_4 * buy_volume_22) > volume) and (close < (sma_30 * buy_ma_offset_22)) and (close < (bb_lowerband * buy_bb_offset_22)) and (ewo_5m < buy_ewo_22) and (rsi_5m < buy_rsi_22) )
+
+
+// Buy Condition 23
+
+buy_23_protections = standard_buy_protection(buy_23_protection__ema_fast, ema_50, ema_200, buy_23_protection__ema_slow, ema_50_1h, ema_200_1h, buy_23_protection__close_above_ema_fast, close, ema_200, buy_23_protection__close_above_ema_slow, ema_200, buy_23_protection__sma200_rising, 50, buy_23_protection__sma200_1h_rising, 50, buy_23_protection__safe_dips, safe_dips_loose, buy_23_protection__safe_pump, safe_pump_24_normal)
+
+buy_23_logic = (buy_23_protections and (close < (bb_lowerband * buy_bb_offset_23)) and (ewo_5m < buy_ewo_23) and (rsi_5m < buy_rsi_23) and (rsi_1h < buy_rsi_1h_23))
+
+
+// Buy Condition 24
+
+buy_24_protections = standard_buy_protection(buy_24_protection__ema_fast, ema_50, ema_200, buy_24_protection__ema_slow, ema_50_1h, ema_200_1h, buy_24_protection__close_above_ema_fast, close, ema_200, buy_24_protection__close_above_ema_slow, ema_200, buy_24_protection__sma200_rising, 30, buy_24_protection__sma200_1h_rising, 36, buy_24_protection__safe_dips, safe_dips_strict, buy_24_protection__safe_pump, safe_pump_24_normal)
+
+buy_24_logic = (buy_24_protections and (ema_12_1h[12] < ema_35_1h[12]) and (ema_12_1h < ema_35_1h) and (cmf_1h[12] < 0) and (cmf_1h > 0) and (rsi_5m < buy_24_rsi_max) and (rsi_1h > buy_24_rsi_1h_min) )
+
+
+// #############################################################
+// Sell Condition 1
+
+sell_01_logic = ((close > bb_upperband) and (close[1] > bb_upperband[1]) and (close[2] > bb_upperband[2]) and (close[3] > bb_upperband[3]) and (close[4] > bb_upperband[4]) and (close[5] > bb_upperband[5]))
+sell_02_logic = ((rsi_5m > sell_rsi_bb_2) and (close > bb_upperband) and (close[1] > bb_upperband[1]) and (close[2] > bb_upperband[2]))
+sell_03_logic = (rsi_5m > sell_rsi_main_3)
+sell_04_logic = ((rsi_5m > sell_dual_rsi_rsi_4) and (rsi_1h > sell_dual_rsi_rsi_1h_4))
+sell_06_logic = ((close < ema_200) and (close > ema_50) and (rsi_5m > sell_rsi_under_6))
+sell_07_logic = ((rsi_1h > sell_rsi_1h_7) and (crossunder(ema_12, ema_26)))
+sell_08_logic = (close > (bb_upperband_1h * sell_bb_relative_8))
+
+plotshape(buy_01_logic, title="1", text="1", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_02_logic, title="2", text="2", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_03_logic, title="3", text="3", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_04_logic, title="4", text="4", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_05_logic, title="5", text="5", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_06_logic, title="6", text="6", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_07_logic, title="7", text="7", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_08_logic, title="8", text="8", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_09_logic, title="9", text="9", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_10_logic, title="10", text="10", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_11_logic, title="11", text="11", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_12_logic, title="12", text="12", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_13_logic, title="13", text="13", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_14_logic, title="14", text="14", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_15_logic, title="15", text="15", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_16_logic, title="16", text="16", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_17_logic, title="17", text="17", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_18_logic, title="18", text="18", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_19_logic, title="19", text="19", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_20_logic, title="20", text="20", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_21_logic, title="21", text="21", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_22_logic, title="22", text="22", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_23_logic, title="23", text="23", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+plotshape(buy_24_logic, title="24", text="24", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
+
+
+plotshape(sell_01_logic, title="1", text="1", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_02_logic, title="2", text="2", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_03_logic, title="3", text="3", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_04_logic, title="4", text="4", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_06_logic, title="5", text="5", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_07_logic, title="6", text="6", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_08_logic, title="7", text="7", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
