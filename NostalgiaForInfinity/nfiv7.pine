@@ -285,7 +285,7 @@ bb40_2_delta = abs(bb40_2_mid - bb40_2_low)
 closedelta = abs(close - close[1])
 tail = abs(close - bb40_2_low)
 
-[bb20_2_mid, bb20_2_upp, bb20_2_low] = bb(close, 20, 2)
+[bb20_2_mid, bb20_2_upp, bb20_2_low] = bb(hlc3, 20, 2)
 
 ema_12  = ema(close, 12)
 ema_15  = ema(close, 15)
@@ -337,7 +337,7 @@ volume_mean_30 = median(volume, 30)
 
 [rsi_1h, cmf_1h] = security(syminfo.tickerid, '60', [rsi(close, 14), chalkin_money_flow(open, high, low, close, volume, 20)])
 
-[bb20_2_mid_1h, bb20_2_upp_1h, bb20_2_low_1h] = security(syminfo.tickerid, '60', bb(close, 20, 2))
+[bb20_2_mid_1h, bb20_2_upp_1h, bb20_2_low_1h] = security(syminfo.tickerid, '60', bb(hlc3, 20, 2))
 
 [hl_pct_change_48, hl_pct_change_36, hl_pct_change_24, oc_pct_change_48, oc_pct_change_36, oc_pct_change_24] = security(syminfo.tickerid, '60', [range_percent_change(open, high, low, close, 'HL', 48), range_percent_change(open, high, low, close, 'HL', 36), range_percent_change(open, high, low, close, 'HL', 24), range_percent_change(open, high, low, close, 'OC', 48), range_percent_change(open, high, low, close, 'OC', 36), range_percent_change(open, high, low, close, 'OC', 24) ] )
 
