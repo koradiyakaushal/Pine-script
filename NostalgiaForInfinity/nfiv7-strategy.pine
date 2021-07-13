@@ -625,7 +625,7 @@ buy_23_logic = (buy_23_protections and (close < (bb20_2_low * buy_bb_offset_23))
 
 buy_24_protections = standard_buy_protection(buy_24_protection__ema_fast, ema_50, ema_200, buy_24_protection__ema_slow, ema_50_1h, ema_200_1h, buy_24_protection__close_above_ema_fast, close, ema_200, buy_24_protection__close_above_ema_slow, ema_200, buy_24_protection__sma200_rising, 30, buy_24_protection__sma200_1h_rising, 36, buy_24_protection__safe_dips, safe_dips_10, buy_24_protection__safe_pump, safe_pump_24_50)
 
-buy_24_logic = (buy_24_protections and (ema_12_1h[12] < ema_35_1h[12]) and (ema_12_1h < ema_35_1h) and (cmf_1h[12] < 0) and (cmf_1h > 0) and (rsi_5m < buy_24_rsi_max) and (rsi_1h > buy_24_rsi_1h_min))
+buy_24_logic = (buy_24_protections and (ema_12_1h[12] < ema_35_1h[12]) and (ema_12_1h > ema_35_1h) and (cmf_1h[12] < 0) and (cmf_1h > 0) and (rsi_5m < buy_24_rsi_max) and (rsi_1h > buy_24_rsi_1h_min))
 
 
 // Buy Condition 26
