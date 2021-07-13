@@ -468,10 +468,9 @@ buy_01_logic = (buy_01_protections and (((close - lowest(open, 36))/lowest(open,
 
 
 // Buy Condition 2
-
 buy_02_protections = standard_buy_protection(buy_02_protection__ema_fast, ema_50, ema_200, buy_02_protection__ema_slow, ema_20_1h, ema_200_1h, buy_02_protection__close_above_ema_fast, close, ema_200, buy_02_protection__close_above_ema_slow, ema_200, buy_02_protection__sma200_rising, 50, buy_02_protection__sma200_1h_rising, 50, buy_02_protection__safe_dips, safe_dips_50, buy_02_protection__safe_pump, safe_pump_24_10)
 
-buy_02_logic = (buy_02_protections and ((rsi_5m < (rsi_1h * buy_rsi_1h_diff_2)) and (mfi_5m < buy_mfi_2) and (close < (bb20_2_low * buy_bb_offset_2))))
+buy_02_logic = (buy_02_protections and ((rsi_5m < (rsi_1h - buy_rsi_1h_diff_2)) and (mfi_5m < buy_mfi_2) and (close < (bb20_2_low * buy_bb_offset_2))))
 
 
 // Buy Condition 3
@@ -559,8 +558,7 @@ buy_14_logic = (buy_14_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) 
 
 
 // Buy Condition 15
-
-buy_15_protections = (standard_buy_protection(buy_15_protection__ema_fast, ema_50, ema_200, buy_15_protection__ema_slow, ema_50_1h, ema_200_1h, buy_15_protection__close_above_ema_fast, close, ema_200, buy_15_protection__close_above_ema_slow, ema_200, buy_15_protection__sma200_rising, 50, buy_15_protection__sma200_1h_rising, 50, buy_15_protection__safe_dips, safe_dips_50, buy_15_protection__safe_pump, safe_pump_36_10) and (close < (ema_200_1h * buy_ema_rel_15)))
+buy_15_protections = (standard_buy_protection(buy_15_protection__ema_fast, ema_50, ema_200, buy_15_protection__ema_slow, ema_50_1h, ema_200_1h, buy_15_protection__close_above_ema_fast, close, ema_200, buy_15_protection__close_above_ema_slow, ema_200, buy_15_protection__sma200_rising, 50, buy_15_protection__sma200_1h_rising, 50, buy_15_protection__safe_dips, safe_dips_50, buy_15_protection__safe_pump, safe_pump_36_10) and (close > (ema_200_1h * buy_ema_rel_15)))
 
 buy_15_logic = (buy_15_protections and (ema_26 > ema_12) and ((ema_26-ema_12) > (open * buy_ema_open_mult_15)) and ((ema_26[1] - ema_12[1]) > (open/100)) and (rsi_5m < buy_rsi_15) and (close < (ema_20 * buy_ma_offset_15)))
 
