@@ -46,8 +46,8 @@ TradeDateIsAllowed() => DateFilter ? time >= i_startTime and time <= i_endTime :
 f_security(_symbol, _res, _src, _repaint) => security(_symbol, _res, _src[_repaint ? 0 : barstate.isrealtime ? 1 : 0])
 
 ema_difference(window_short, window_long) =>
-    sma1 = sma(close, window_short)
-    sma2 = sma(close, window_long)
+    sma1 = ema(close, window_short)
+    sma2 = ema(close, window_long)
     diff = (sma1 - sma2)/close*100
     diff
 
@@ -546,7 +546,7 @@ buy_14_logic = (buy_14_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) 
 
 
 // Buy Condition 15
-buy_15_protectins = (standard_buy_protection(buy_15_protection__ema_fast, ema_50, ema_200, buy_15_protection__ema_slow, ema_50_1h, ema_200_1h, buy_15_protection__close_above_ema_fast, close, ema_200, buy_15_protection__close_above_ema_slow, ema_200, buy_15_protection__sma200_rising, 50, buy_15_protection__sma200_1h_rising, 50, buy_15_protection__safe_dips, safe_dips_50, buy_15_protection__safe_pump, safe_pump_36_10) and (close > (ema_200_1h * buy_ema_rel_15)))
+buy_15_protections = (standard_buy_protection(buy_15_protection__ema_fast, ema_50, ema_200, buy_15_protection__ema_slow, ema_50_1h, ema_200_1h, buy_15_protection__close_above_ema_fast, close, ema_200, buy_15_protection__close_above_ema_slow, ema_200, buy_15_protection__sma200_rising, 50, buy_15_protection__sma200_1h_rising, 50, buy_15_protection__safe_dips, safe_dips_50, buy_15_protection__safe_pump, safe_pump_36_10) and (close > (ema_200_1h * buy_ema_rel_15)))
 
 buy_15_logic = (buy_15_protections and (ema_26 > ema_12) and ((ema_26-ema_12) > (open * buy_ema_open_mult_15)) and ((ema_26[1] - ema_12[1]) > (open/100)) and (rsi_5m < buy_rsi_15) and (close < (ema_20 * buy_ma_offset_15)))
 
