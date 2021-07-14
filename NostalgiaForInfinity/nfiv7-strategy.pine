@@ -33,6 +33,9 @@ strategy(title=SystemName, shorttitle=SystemName,
  precision=6, max_lines_count=500, max_labels_count=500, overlay=is_overlay, max_bars_back=20)
 
 // ————— Date range filtering
+
+informative_tf = input(title="Informative Timeframe", type=input.resolution, defval="60")
+
 DateFilter = input(false, "═════════════ Date Range Filtering", group="Date")
 
 // ————— Syntax coming from https://www.tradingview.com/blog/en/new-parameter-for-date-input-added-to-pine-21812/
@@ -348,43 +351,43 @@ volume_mean_30 = median(volume, 30)
 
 // Informative indicators
 
-[ema_12_1h, ema_15_1h, ema_20_1h, ema_26_1h, ema_35_1h, ema_50_1h, ema_100_1h, ema_200_1h] = security(syminfo.tickerid, '60', [ema(close, 12), ema(close, 15), ema(close, 20), ema(close, 26), ema(close, 35), ema(close, 50), ema(close, 100), ema(close, 200)])
+[ema_12_1h, ema_15_1h, ema_20_1h, ema_26_1h, ema_35_1h, ema_50_1h, ema_100_1h, ema_200_1h] = security(syminfo.tickerid, informative_tf, [ema(close, 12), ema(close, 15), ema(close, 20), ema(close, 26), ema(close, 35), ema(close, 50), ema(close, 100), ema(close, 200)])
 
-[sma_200_1h , sma_200_dec_20_1h] = security(syminfo.tickerid, '60', [sma(close, 200), sma_dec_1h(close, 200)])
+[sma_200_1h , sma_200_dec_20_1h] = security(syminfo.tickerid, informative_tf, [sma(close, 200), sma_dec_1h(close, 200)])
 
-[rsi_1h, cmf_1h] = security(syminfo.tickerid, '60', [rsi(close, 14), chalkin_money_flow(open, high, low, close, volume, 20)])
+[rsi_1h, cmf_1h] = security(syminfo.tickerid, informative_tf, [rsi(close, 14), chalkin_money_flow(open, high, low, close, volume, 20)])
 
-[bb20_2_mid_1h, bb20_2_upp_1h, bb20_2_low_1h] = security(syminfo.tickerid, '60', bb(hlc3, 20, 2))
+[bb20_2_mid_1h, bb20_2_upp_1h, bb20_2_low_1h] = security(syminfo.tickerid, informative_tf, bb(hlc3, 20, 2))
 
-[hl_pct_change_48, hl_pct_change_36, hl_pct_change_24, oc_pct_change_48, oc_pct_change_36, oc_pct_change_24] = security(syminfo.tickerid, '60', [range_percent_change(open, high, low, close, 'HL', 48), range_percent_change(open, high, low, close, 'HL', 36), range_percent_change(open, high, low, close, 'HL', 24), range_percent_change(open, high, low, close, 'OC', 48), range_percent_change(open, high, low, close, 'OC', 36), range_percent_change(open, high, low, close, 'OC', 24) ] )
+[hl_pct_change_48, hl_pct_change_36, hl_pct_change_24, oc_pct_change_48, oc_pct_change_36, oc_pct_change_24] = security(syminfo.tickerid, informative_tf, [range_percent_change(open, high, low, close, 'HL', 48), range_percent_change(open, high, low, close, 'HL', 36), range_percent_change(open, high, low, close, 'HL', 24), range_percent_change(open, high, low, close, 'OC', 48), range_percent_change(open, high, low, close, 'OC', 36), range_percent_change(open, high, low, close, 'OC', 24) ] )
 
-[safe_pump_24_10, safe_pump_36_10, safe_pump_48_10] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_10_24, buy_pump_pull_threshold_10_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_10_36, buy_pump_pull_threshold_10_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_10_48, buy_pump_pull_threshold_10_48)] )
+[safe_pump_24_10, safe_pump_36_10, safe_pump_48_10] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_10_24, buy_pump_pull_threshold_10_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_10_36, buy_pump_pull_threshold_10_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_10_48, buy_pump_pull_threshold_10_48)] )
 
-[safe_pump_24_20, safe_pump_36_20, safe_pump_48_20] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_20_24, buy_pump_pull_threshold_20_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_20_36, buy_pump_pull_threshold_20_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_20_48, buy_pump_pull_threshold_20_48)] )
+[safe_pump_24_20, safe_pump_36_20, safe_pump_48_20] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_20_24, buy_pump_pull_threshold_20_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_20_36, buy_pump_pull_threshold_20_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_20_48, buy_pump_pull_threshold_20_48)] )
 
-[safe_pump_24_30, safe_pump_36_30, safe_pump_48_30] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_30_24, buy_pump_pull_threshold_30_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_30_36, buy_pump_pull_threshold_30_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_30_48, buy_pump_pull_threshold_30_48)] )
+[safe_pump_24_30, safe_pump_36_30, safe_pump_48_30] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_30_24, buy_pump_pull_threshold_30_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_30_36, buy_pump_pull_threshold_30_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_30_48, buy_pump_pull_threshold_30_48)] )
 
-[safe_pump_24_40, safe_pump_36_40, safe_pump_48_40] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_40_24, buy_pump_pull_threshold_40_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_40_36, buy_pump_pull_threshold_40_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_40_48, buy_pump_pull_threshold_40_48)] )
+[safe_pump_24_40, safe_pump_36_40, safe_pump_48_40] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_40_24, buy_pump_pull_threshold_40_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_40_36, buy_pump_pull_threshold_40_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_40_48, buy_pump_pull_threshold_40_48)] )
 
-[safe_pump_24_50, safe_pump_36_50, safe_pump_48_50] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_50_24, buy_pump_pull_threshold_50_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_50_36, buy_pump_pull_threshold_50_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_50_48, buy_pump_pull_threshold_50_48)] )
+[safe_pump_24_50, safe_pump_36_50, safe_pump_48_50] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_50_24, buy_pump_pull_threshold_50_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_50_36, buy_pump_pull_threshold_50_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_50_48, buy_pump_pull_threshold_50_48)] )
 
-[safe_pump_24_60, safe_pump_36_60, safe_pump_48_60] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_60_24, buy_pump_pull_threshold_60_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_60_36, buy_pump_pull_threshold_60_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_60_48, buy_pump_pull_threshold_60_48)] )
+[safe_pump_24_60, safe_pump_36_60, safe_pump_48_60] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_60_24, buy_pump_pull_threshold_60_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_60_36, buy_pump_pull_threshold_60_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_60_48, buy_pump_pull_threshold_60_48)] )
 
-[safe_pump_24_70, safe_pump_36_70, safe_pump_48_70] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_70_24, buy_pump_pull_threshold_70_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_70_36, buy_pump_pull_threshold_70_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_70_48, buy_pump_pull_threshold_70_48)] )
+[safe_pump_24_70, safe_pump_36_70, safe_pump_48_70] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_70_24, buy_pump_pull_threshold_70_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_70_36, buy_pump_pull_threshold_70_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_70_48, buy_pump_pull_threshold_70_48)] )
 
-[safe_pump_24_80, safe_pump_36_80, safe_pump_48_80] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_80_24, buy_pump_pull_threshold_80_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_80_36, buy_pump_pull_threshold_80_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_80_48, buy_pump_pull_threshold_80_48)] )
+[safe_pump_24_80, safe_pump_36_80, safe_pump_48_80] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_80_24, buy_pump_pull_threshold_80_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_80_36, buy_pump_pull_threshold_80_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_80_48, buy_pump_pull_threshold_80_48)] )
 
-[safe_pump_24_90, safe_pump_36_90, safe_pump_48_90] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_90_24, buy_pump_pull_threshold_90_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_90_36, buy_pump_pull_threshold_90_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_90_48, buy_pump_pull_threshold_90_48)] )
+[safe_pump_24_90, safe_pump_36_90, safe_pump_48_90] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_90_24, buy_pump_pull_threshold_90_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_90_36, buy_pump_pull_threshold_90_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_90_48, buy_pump_pull_threshold_90_48)] )
 
-[safe_pump_24_100, safe_pump_36_100, safe_pump_48_100] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_100_24, buy_pump_pull_threshold_100_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_100_36, buy_pump_pull_threshold_100_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_100_48, buy_pump_pull_threshold_100_48)] )
+[safe_pump_24_100, safe_pump_36_100, safe_pump_48_100] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_100_24, buy_pump_pull_threshold_100_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_100_36, buy_pump_pull_threshold_100_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_100_48, buy_pump_pull_threshold_100_48)] )
 
-[safe_pump_24_110, safe_pump_36_110, safe_pump_48_110] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_110_24, buy_pump_pull_threshold_110_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_110_36, buy_pump_pull_threshold_110_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_110_48, buy_pump_pull_threshold_110_48)] )
+[safe_pump_24_110, safe_pump_36_110, safe_pump_48_110] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_110_24, buy_pump_pull_threshold_110_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_110_36, buy_pump_pull_threshold_110_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_110_48, buy_pump_pull_threshold_110_48)] )
 
-[safe_pump_24_120, safe_pump_36_120, safe_pump_48_120] = security(syminfo.tickerid, '60', [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_120_24, buy_pump_pull_threshold_120_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_120_36, buy_pump_pull_threshold_120_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_120_48, buy_pump_pull_threshold_120_48)] )
+[safe_pump_24_120, safe_pump_36_120, safe_pump_48_120] = security(syminfo.tickerid, informative_tf, [safe_pump(open, close, 24, oc_pct_change_24, buy_pump_threshold_120_24, buy_pump_pull_threshold_120_24), safe_pump(open, close, 36, oc_pct_change_36, buy_pump_threshold_120_36, buy_pump_pull_threshold_120_36), safe_pump(open, close, 48, oc_pct_change_48, buy_pump_threshold_120_48, buy_pump_pull_threshold_120_48)] )
 
-[sell_pump_48_1, sell_pump_48_2, sell_pump_48_3] = security(syminfo.tickerid, '60', [(hl_pct_change_48 > sell_pump_threshold_48_1), (hl_pct_change_48 > sell_pump_threshold_48_2), (hl_pct_change_48 > sell_pump_threshold_48_3)])
-[sell_pump_36_1, sell_pump_36_2, sell_pump_36_3] = security(syminfo.tickerid, '60', [(hl_pct_change_48 > sell_pump_threshold_36_1), (hl_pct_change_48 > sell_pump_threshold_36_2), (hl_pct_change_48 > sell_pump_threshold_36_3)])
-[sell_pump_24_1, sell_pump_24_2, sell_pump_24_3] = security(syminfo.tickerid, '60', [(hl_pct_change_48 > sell_pump_threshold_24_1), (hl_pct_change_48 > sell_pump_threshold_24_2), (hl_pct_change_48 > sell_pump_threshold_24_3)])
+[sell_pump_48_1, sell_pump_48_2, sell_pump_48_3] = security(syminfo.tickerid, informative_tf, [(hl_pct_change_48 > sell_pump_threshold_48_1), (hl_pct_change_48 > sell_pump_threshold_48_2), (hl_pct_change_48 > sell_pump_threshold_48_3)])
+[sell_pump_36_1, sell_pump_36_2, sell_pump_36_3] = security(syminfo.tickerid, informative_tf, [(hl_pct_change_48 > sell_pump_threshold_36_1), (hl_pct_change_48 > sell_pump_threshold_36_2), (hl_pct_change_48 > sell_pump_threshold_36_3)])
+[sell_pump_24_1, sell_pump_24_2, sell_pump_24_3] = security(syminfo.tickerid, informative_tf, [(hl_pct_change_48 > sell_pump_threshold_24_1), (hl_pct_change_48 > sell_pump_threshold_24_2), (hl_pct_change_48 > sell_pump_threshold_24_3)])
 
 sell_custom_profit_0    = 0.01, sell_custom_rsi_0       = 34.0, sell_custom_profit_1    = 0.02, sell_custom_rsi_1       = 35.0, sell_custom_profit_2    = 0.03, sell_custom_rsi_2       = 37.0, sell_custom_profit_3    = 0.04, sell_custom_rsi_3       = 42.0, sell_custom_profit_4    = 0.05, sell_custom_rsi_4       = 43.0, sell_custom_profit_5    = 0.06, sell_custom_rsi_5       = 45.0, sell_custom_profit_6    = 0.07, sell_custom_rsi_6       = 48.0, sell_custom_profit_7    = 0.08, sell_custom_rsi_7       = 54.0, sell_custom_profit_8    = 0.09, sell_custom_rsi_8       = 55.0, sell_custom_profit_9    = 0.1, sell_custom_rsi_9       = 54.0, sell_custom_profit_10   = 0.12, sell_custom_rsi_10      = 42.0, sell_custom_profit_11   = 0.20, sell_custom_rsi_11      = 34.0
 
