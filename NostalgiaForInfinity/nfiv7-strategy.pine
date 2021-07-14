@@ -474,153 +474,132 @@ buy_02_logic = (buy_02_protections and ((rsi_5m < (rsi_1h - buy_rsi_1h_diff_2)) 
 
 
 // Buy Condition 3
+buy_03_protections = standard_buy_protection(buy_03_protection__ema_fast, ema_100, ema_200, buy_03_protection__ema_slow, ema_100_1h, ema_200_1h, buy_03_protection__close_above_ema_fast, close, ema_200, buy_03_protection__close_above_ema_slow, ema_200, buy_03_protection__sma200_rising, 50, buy_03_protection__sma200_1h_rising, 50, buy_03_protection__safe_dips, safe_dips_10, buy_03_protection__safe_pump, safe_pump_36_100) and (close > (ema_200_1h * buy_ema_rel_3))
 
-buy_03_protections = standard_buy_protection(buy_03_protection__ema_fast, ema_100, ema_200, buy_03_protection__ema_slow, ema_100_1h, ema_200_1h, buy_03_protection__close_above_ema_fast, close, ema_200, buy_03_protection__close_above_ema_slow, ema_200, buy_03_protection__sma200_rising, 50, buy_03_protection__sma200_1h_rising, 50, buy_03_protection__safe_dips, safe_dips_10, buy_03_protection__safe_pump, safe_pump_36_100) and (close < (ema_200_1h * buy_ema_rel_3))
-
-buy_03_logic = (buy_03_protections and (bb40_2_low[1] > 0) and (bb40_2_delta < (close * buy_bb40_bbdelta_close_3)) and (closedelta > (close*buy_bb40_closedelta_close_3)) and (tail < (bb40_2_delta * buy_bb40_tail_bbdelta_3)) and (close < bb40_2_low[1]) and (close < close[1]))
+buy_03_logic = (buy_03_protections and (bb40_2_low[1] > 0) and (bb40_2_delta > (close * buy_bb40_bbdelta_close_3)) and (closedelta > (close*buy_bb40_closedelta_close_3)) and (tail < (bb40_2_delta * buy_bb40_tail_bbdelta_3)) and (close < bb40_2_low[1]) and (close <= close[1]))
 
 
 // Buy Condition 4
-
 buy_04_protections = standard_buy_protection(buy_04_protection__ema_fast, ema_50, ema_200, buy_04_protection__ema_slow, ema_50_1h, ema_200_1h, buy_04_protection__close_above_ema_fast, close, ema_200, buy_04_protection__close_above_ema_slow, ema_200, buy_04_protection__sma200_rising, 50, buy_04_protection__sma200_1h_rising, 20, buy_04_protection__safe_dips, safe_dips_40, buy_04_protection__safe_pump, safe_pump_48_110)
 
 buy_04_logic = (buy_04_protections and (close < ema_50) and (close < (buy_bb20_close_bblowerband_4 * bb20_2_low)) and (volume < (volume_mean_30[1]*buy_bb20_volume_4)))
 
 
 // Buy Condition 5
-
 buy_05_protections = (standard_buy_protection(buy_05_protection__ema_fast, ema_100, ema_200, buy_05_protection__ema_slow, ema_50_1h, ema_200_1h, buy_05_protection__close_above_ema_fast, close, ema_100, buy_05_protection__close_above_ema_slow, ema_200, buy_05_protection__sma200_rising, 50, buy_05_protection__sma200_1h_rising, 50, buy_05_protection__safe_dips, safe_dips_100, buy_05_protection__safe_pump, safe_pump_36_20)) and (close > (ema_200_1h * buy_ema_rel_5))
 
 buy_05_logic = (buy_05_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) > (open * buy_ema_open_mult_5)) and ((ema_26[1] - ema_12[1]) > (open / 100)) and (close < (bb20_2_low * buy_bb_offset_5)))
 
 
 // Buy Condition 6
-
 buy_06_protections = standard_buy_protection(buy_06_protection__ema_fast, ema_50, ema_200, buy_06_protection__ema_slow, ema_100_1h, ema_200_1h, buy_06_protection__close_above_ema_fast, close, ema_200, buy_06_protection__close_above_ema_slow, ema_200, buy_06_protection__sma200_rising, 50, buy_06_protection__sma200_1h_rising, 50, buy_06_protection__safe_dips, safe_dips_50, buy_06_protection__safe_pump, safe_pump_36_20)
 
 buy_06_logic = (buy_06_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) > (open * buy_ema_open_mult_6)) and ((ema_26[1] - ema_12[1]) > (open/100)) and (close < (bb20_2_low * buy_bb_offset_6)))
 
 
 // Buy Condition 7
-
 buy_07_protections = standard_buy_protection(buy_07_protection__ema_fast, ema_100, ema_200, buy_07_protection__ema_slow, ema_12_1h, ema_200_1h, buy_07_protection__close_above_ema_fast, close, ema_200, buy_07_protection__close_above_ema_slow, ema_200, buy_07_protection__sma200_rising, 50, buy_07_protection__sma200_1h_rising, 50, buy_07_protection__safe_dips, safe_dips_50, buy_07_protection__safe_pump, safe_pump_24_50)
 
 buy_07_logic = (buy_07_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) > (open * buy_ema_open_mult_7)) and ((ema_26[1] - ema_12[1]) > (open/100)) and (rsi_5m < buy_rsi_7))
 
 
 // Buy Condition 8
-
 buy_08_protections = standard_buy_protection(buy_08_protection__ema_fast, ema_50, ema_200, buy_08_protection__ema_slow, ema_12_1h, ema_200_1h, buy_08_protection__close_above_ema_fast, close, ema_200, buy_08_protection__close_above_ema_slow, ema_200, buy_08_protection__sma200_rising, 50, buy_08_protection__sma200_1h_rising, 50, buy_08_protection__safe_dips, safe_dips_100, buy_08_protection__safe_pump, safe_pump_24_120)
 
 buy_08_logic = (buy_08_protections and (rsi_5m < buy_rsi_8) and (volume > (volume[1] * buy_volume_8)) and (close > open) and ((close-low) > ((close-open) * buy_tail_diff_8)))
 
 
 // Buy Condition 9
-
 buy_09_protections = (standard_buy_protection(buy_09_protection__ema_fast, ema_100, ema_200, buy_09_protection__ema_slow, ema_50_1h, ema_200_1h, buy_09_protection__close_above_ema_fast, close, ema_200, buy_09_protection__close_above_ema_slow, ema_200, buy_09_protection__sma200_rising, 50, buy_09_protection__sma200_1h_rising, 50, buy_09_protection__safe_dips, safe_dips_10, buy_09_protection__safe_pump, safe_pump_24_50)) and (ema_50 > ema_200)
 
 buy_09_logic = ((close < (ema_20 * buy_ma_offset_9)) and (close < (bb20_2_low * buy_ma_offset_9)) and (rsi_1h > buy_rsi_1h_min_9) and (mfi_5m < buy_mfi_9))
 
 
 // Buy Condition 10
-
 buy_10_protections = (standard_buy_protection(buy_10_protection__ema_fast, ema_50, ema_200, buy_10_protection__ema_slow, ema_50_1h, ema_200_1h, buy_10_protection__close_above_ema_fast, close, ema_200, buy_10_protection__close_above_ema_slow, ema_200, buy_10_protection__sma200_rising, 50, buy_10_protection__sma200_1h_rising, 24, buy_10_protection__safe_dips, safe_dips_100, buy_10_protection__safe_pump, safe_pump_24_50) and (ema_50_1h > ema_100_1h))
 
 buy_10_logic = (buy_10_protections and (close < (sma_30 * buy_ma_offset_10)) and (close < (bb20_2_low * buy_bb_offset_10)) and (rsi_1h < buy_rsi_1h_10))
 
 
 // Buy Condition 11
-
 buy_11_protections = (standard_buy_protection(buy_11_protection__ema_fast, ema_50, ema_200, buy_11_protection__ema_slow, ema_50_1h, ema_200_1h, buy_11_protection__close_above_ema_fast, close, ema_200, buy_11_protection__close_above_ema_slow, ema_200, buy_11_protection__sma200_rising, 50, buy_11_protection__sma200_1h_rising, 50, buy_11_protection__safe_dips, safe_dips_100, buy_11_protection__safe_pump, safe_pump_24_50) and (ema_50_1h > ema_100_1h) and (safe_pump_36_50) and (safe_pump_48_100))
 
 buy_11_logic = (buy_11_protections and ((close-lowest(open, 36))/(lowest(open, 36)) > buy_min_inc_11) and (close < (sma_30 * buy_ma_offset_11)) and (rsi_1h > buy_rsi_1h_min_11) and (rsi_1h < buy_rsi_1h_max_11) and (mfi_5m < buy_mfi_11))
 
 
 // Buy Condition 12
-
 buy_12_protections = standard_buy_protection(buy_12_protection__ema_fast, ema_50, ema_200, buy_12_protection__ema_slow, ema_50_1h, ema_200_1h, buy_12_protection__close_above_ema_fast, close, ema_200, buy_12_protection__close_above_ema_slow, ema_200, buy_12_protection__sma200_rising, 50, buy_12_protection__sma200_1h_rising, 24, buy_12_protection__safe_dips, safe_dips_100, buy_12_protection__safe_pump, safe_pump_24_50)
 
 buy_12_logic = (buy_12_protections and (close < (sma_30 * buy_ma_offset_12)) and (ewo_5m > buy_ewo_12) and (rsi_5m < buy_rsi_12))
 
 
 // Buy Condition 13
-
 buy_13_protections = (standard_buy_protection(buy_13_protection__ema_fast, ema_50, ema_200, buy_13_protection__ema_slow, ema_50_1h, ema_200_1h, buy_13_protection__close_above_ema_fast, close, ema_200, buy_13_protection__close_above_ema_slow, ema_200, buy_13_protection__sma200_rising, 50, buy_13_protection__sma200_1h_rising, 24, buy_13_protection__safe_dips, safe_dips_10, buy_13_protection__safe_pump, safe_pump_24_50) and (ema_50_1h > ema_100_1h) and (safe_pump_24_50))
 
 buy_13_logic = (buy_13_protections and (close < (sma_30 * buy_ma_offset_13)) and (ewo_5m < buy_ewo_13) )
 
 
 // Buy Condition 14
-
 buy_14_protections = standard_buy_protection(buy_14_protection__ema_fast, ema_50, ema_200, buy_14_protection__ema_slow, ema_50_1h, ema_200_1h, buy_14_protection__close_above_ema_fast, close, ema_200, buy_14_protection__close_above_ema_slow, ema_200, buy_14_protection__sma200_rising, 30, buy_14_protection__sma200_1h_rising, 50, buy_14_protection__safe_dips, safe_dips_10, buy_14_protection__safe_pump, safe_pump_24_70)
 
 buy_14_logic = (buy_14_protections and (ema_26 > ema_12) and ((ema_26 - ema_12) > (open * buy_ema_open_mult_14)) and ((ema_26[1] - ema_12[1]) > (open/100)) and (close < (bb20_2_low * buy_bb_offset_14)) and (close < (ema_20 * buy_ma_offset_14)))
 
 
 // Buy Condition 15
-buy_15_protections = (standard_buy_protection(buy_15_protection__ema_fast, ema_50, ema_200, buy_15_protection__ema_slow, ema_50_1h, ema_200_1h, buy_15_protection__close_above_ema_fast, close, ema_200, buy_15_protection__close_above_ema_slow, ema_200, buy_15_protection__sma200_rising, 50, buy_15_protection__sma200_1h_rising, 50, buy_15_protection__safe_dips, safe_dips_50, buy_15_protection__safe_pump, safe_pump_36_10) and (close > (ema_200_1h * buy_ema_rel_15)))
+buy_15_protectins = (standard_buy_protection(buy_15_protection__ema_fast, ema_50, ema_200, buy_15_protection__ema_slow, ema_50_1h, ema_200_1h, buy_15_protection__close_above_ema_fast, close, ema_200, buy_15_protection__close_above_ema_slow, ema_200, buy_15_protection__sma200_rising, 50, buy_15_protection__sma200_1h_rising, 50, buy_15_protection__safe_dips, safe_dips_50, buy_15_protection__safe_pump, safe_pump_36_10) and (close > (ema_200_1h * buy_ema_rel_15)))
 
 buy_15_logic = (buy_15_protections and (ema_26 > ema_12) and ((ema_26-ema_12) > (open * buy_ema_open_mult_15)) and ((ema_26[1] - ema_12[1]) > (open/100)) and (rsi_5m < buy_rsi_15) and (close < (ema_20 * buy_ma_offset_15)))
 
 
 // Buy Condition 16
-
 buy_16_protections = standard_buy_protection(buy_16_protection__ema_fast, ema_50, ema_200, buy_16_protection__ema_slow, ema_50_1h, ema_200_1h, buy_16_protection__close_above_ema_fast, close, ema_200, buy_16_protection__close_above_ema_slow, ema_50, buy_16_protection__sma200_rising, 50, buy_16_protection__sma200_1h_rising, 50, buy_16_protection__safe_dips, safe_dips_10, buy_16_protection__safe_pump, safe_pump_24_10)
 
 buy_16_logic = (buy_16_protections and (close < (ema_20 * buy_ma_offset_16)) and (ewo_5m > buy_ewo_16) and (rsi_5m < buy_rsi_16))
 
 
 // Buy Condition 17
-
 buy_17_protections = standard_buy_protection(buy_17_protection__ema_fast, ema_50, ema_200, buy_17_protection__ema_slow, ema_50_1h, ema_200_1h, buy_17_protection__close_above_ema_fast, close, ema_200, buy_17_protection__close_above_ema_slow, ema_200, buy_17_protection__sma200_rising, 50, buy_17_protection__sma200_1h_rising, 50, buy_17_protection__safe_dips, safe_dips_10, buy_17_protection__safe_pump, safe_pump_24_120)
 
 buy_17_logic = (buy_17_protections and (close < (ema_20 * buy_ma_offset_17)) and (ewo_5m < buy_ewo_17) )
 
 
 // Buy Condition 18
-
 buy_18_protections = (standard_buy_protection(buy_18_protection__ema_fast, ema_100, ema_200, buy_18_protection__ema_slow, ema_50_1h, ema_200_1h, buy_18_protection__close_above_ema_fast, close, ema_200, buy_18_protection__close_above_ema_slow, ema_200, buy_18_protection__sma200_rising, 44, buy_18_protection__sma200_1h_rising, 72, buy_18_protection__safe_dips, safe_dips_50, buy_18_protection__safe_pump, safe_pump_24_60) and (ema_100 > ema_200) and (sma_200) > (sma_200[20]) and (sma_200_1h > sma_200_1h[36]))
 
 buy_18_logic = (buy_18_protections and (rsi_5m < buy_rsi_18) and (close < (bb20_2_low * buy_bb_offset_18)))
 
 
 // Buy Condition 19
-
 buy_19_protections = (standard_buy_protection(buy_19_protection__ema_fast, ema_50, ema_200, buy_19_protection__ema_slow, ema_100_1h, ema_200_1h, buy_19_protection__close_above_ema_fast, close, ema_200, buy_19_protection__close_above_ema_slow, ema_200, buy_19_protection__sma200_rising, 36, buy_19_protection__sma200_1h_rising, 50, buy_19_protection__safe_dips, safe_dips_50, buy_19_protection__safe_pump, safe_pump_24_50) and (ema_50_1h > ema_200_1h))
 
 buy_19_logic = (buy_19_protections and (close[1] > ema_100_1h) and (low < ema_100_1h) and (close < ema_100_1h) and (rsi_1h > buy_rsi_1h_min_19) and (chop_5m < buy_chop_min_19))
 
 
 // Buy Condition 20
-
 buy_20_protections = standard_buy_protection(buy_20_protection__ema_fast, ema_50, ema_200, buy_20_protection__ema_slow, ema_50_1h, ema_200_1h, buy_20_protection__close_above_ema_fast, close, ema_200, buy_20_protection__close_above_ema_slow, ema_200, buy_20_protection__sma200_rising, 50, buy_20_protection__sma200_1h_rising, 50, buy_20_protection__safe_dips, safe_dips_10, buy_20_protection__safe_pump, safe_pump_24_50)
 
 buy_20_logic = (buy_20_protections and (rsi_5m < buy_rsi_20) and (rsi_1h < buy_rsi_1h_20))
 
 
 // Buy Condition 21
-
 buy_21_protections = standard_buy_protection(buy_21_protection__ema_fast, ema_50, ema_200, buy_21_protection__ema_slow, ema_50_1h, ema_200_1h, buy_21_protection__close_above_ema_fast, close, ema_200, buy_21_protection__close_above_ema_slow, ema_200, buy_21_protection__sma200_rising, 50, buy_21_protection__sma200_1h_rising, 50, buy_21_protection__safe_dips, safe_dips_90, buy_21_protection__safe_pump, safe_pump_24_50)
 
 buy_21_logic = (buy_21_protections and (rsi_5m < buy_rsi_21) and (rsi_1h < buy_rsi_1h_21))
 
 
 // Buy Condition 22
-
 buy_22_protections = (standard_buy_protection(buy_22_protection__ema_fast, ema_50, ema_200, buy_22_protection__ema_slow, ema_50_1h, ema_200_1h, buy_22_protection__close_above_ema_fast, close, ema_200, buy_22_protection__close_above_ema_slow, ema_200, buy_22_protection__sma200_rising, 50, buy_22_protection__sma200_1h_rising, 50, buy_22_protection__safe_dips, safe_dips_10, buy_22_protection__safe_pump, safe_pump_24_50) and (ema_100_1h > ema_100_1h[12]) and (ema_200_1h > ema_200_1h[36]) )
 
 buy_22_logic = (buy_22_protections and ((volume_mean_4 * buy_volume_22) > volume) and (close < (sma_30 * buy_ma_offset_22)) and (close < (bb20_2_low * buy_bb_offset_22)) and (ewo_5m < buy_ewo_22) and (rsi_5m < buy_rsi_22) )
 
 
 // Buy Condition 23
-
 buy_23_protections = standard_buy_protection(buy_23_protection__ema_fast, ema_50, ema_200, buy_23_protection__ema_slow, ema_50_1h, ema_200_1h, buy_23_protection__close_above_ema_fast, close, ema_200, buy_23_protection__close_above_ema_slow, ema_200, buy_23_protection__sma200_rising, 50, buy_23_protection__sma200_1h_rising, 50, buy_23_protection__safe_dips, safe_dips_100, buy_23_protection__safe_pump, safe_pump_24_50)
 
 buy_23_logic = (buy_23_protections and (close < (bb20_2_low * buy_bb_offset_23)) and (ewo_5m < buy_ewo_23) and (rsi_5m < buy_rsi_23) and (rsi_1h < buy_rsi_1h_23))
 
 
 // Buy Condition 24
-
 buy_24_protections = standard_buy_protection(buy_24_protection__ema_fast, ema_50, ema_200, buy_24_protection__ema_slow, ema_50_1h, ema_200_1h, buy_24_protection__close_above_ema_fast, close, ema_200, buy_24_protection__close_above_ema_slow, ema_200, buy_24_protection__sma200_rising, 30, buy_24_protection__sma200_1h_rising, 36, buy_24_protection__safe_dips, safe_dips_10, buy_24_protection__safe_pump, safe_pump_24_50)
 
 buy_24_logic = (buy_24_protections and (ema_12_1h[12] < ema_35_1h[12]) and (ema_12_1h > ema_35_1h) and (cmf_1h[12] < 0) and (cmf_1h > 0) and (rsi_5m < buy_24_rsi_max) and (rsi_1h > buy_24_rsi_1h_min))
