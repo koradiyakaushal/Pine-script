@@ -575,7 +575,7 @@ buy_18_logic = (buy_18_protections and (rsi_5m < buy_rsi_18) and (close < (bb20_
 // Buy Condition 19
 buy_19_protections = (standard_buy_protection(buy_19_protection__ema_fast, ema_50, ema_200, buy_19_protection__ema_slow, ema_100_1h, ema_200_1h, buy_19_protection__close_above_ema_fast, close, ema_200, buy_19_protection__close_above_ema_slow, ema_200, buy_19_protection__sma200_rising, 36, buy_19_protection__sma200_1h_rising, 50, buy_19_protection__safe_dips, safe_dips_50, buy_19_protection__safe_pump, safe_pump_24_50) and (ema_50_1h > ema_200_1h))
 
-buy_19_logic = (buy_19_protections and (close[1] > ema_100_1h) and (low < ema_100_1h) and (close < ema_100_1h) and (rsi_1h > buy_rsi_1h_min_19) and (chop_5m < buy_chop_min_19))
+buy_19_logic = (buy_19_protections and (close[1] > ema_100_1h) and (low < ema_100_1h) and (close > ema_100_1h) and (rsi_1h > buy_rsi_1h_min_19) and (chop_5m < buy_chop_min_19))
 
 
 // Buy Condition 20
@@ -593,7 +593,7 @@ buy_21_logic = (buy_21_protections and (rsi_5m < buy_rsi_21) and (rsi_1h < buy_r
 // Buy Condition 22
 buy_22_protections = (standard_buy_protection(buy_22_protection__ema_fast, ema_50, ema_200, buy_22_protection__ema_slow, ema_50_1h, ema_200_1h, buy_22_protection__close_above_ema_fast, close, ema_200, buy_22_protection__close_above_ema_slow, ema_200, buy_22_protection__sma200_rising, 50, buy_22_protection__sma200_1h_rising, 50, buy_22_protection__safe_dips, safe_dips_10, buy_22_protection__safe_pump, safe_pump_24_50) and (ema_100_1h > ema_100_1h[12]) and (ema_200_1h > ema_200_1h[36]) )
 
-buy_22_logic = (buy_22_protections and ((volume_mean_4 * buy_volume_22) > volume) and (close < (sma_30 * buy_ma_offset_22)) and (close < (bb20_2_low * buy_bb_offset_22)) and (ewo_5m < buy_ewo_22) and (rsi_5m < buy_rsi_22) )
+buy_22_logic = (buy_22_protections and ((volume_mean_4 * buy_volume_22) > volume) and (close < (sma_30 * buy_ma_offset_22)) and (close < (bb20_2_low * buy_bb_offset_22)) and (ewo_5m > buy_ewo_22) and (rsi_5m < buy_rsi_22) )
 
 
 // Buy Condition 23
