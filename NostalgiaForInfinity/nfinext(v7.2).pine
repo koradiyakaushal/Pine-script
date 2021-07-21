@@ -42,13 +42,13 @@ _master_pair = input(title="Master Pair", type=input.symbol, defval="BINANCE:BTC
 has_BTC_base_tf = input(true, "Has BTC BASE TF?")
 has_BTC_info_tf = input(true, "Has BTC Informative TF?")
 
-DateFilter = input(false, "═════════════ Date Range Filtering", group="Date")
+// DateFilter = input(false, "═════════════ Date Range Filtering", group="Date")
 
-// ————— Syntax coming from https://www.tradingview.com/blog/en/new-parameter-for-date-input-added-to-pine-21812/
-i_startTime = input(defval = timestamp("01 Jun 2021 00:00 +0000"), title = "Start Time", type = input.time, group="Date")
-i_endTime = input(defval = timestamp("30 Dec 2021 23:30 +0000"), title = "End Time", type = input.time, group="Date")
+// // ————— Syntax coming from https://www.tradingview.com/blog/en/new-parameter-for-date-input-added-to-pine-21812/
+// i_startTime = input(defval = timestamp("01 Jun 2021 00:00 +0000"), title = "Start Time", type = input.time, group="Date")
+// i_endTime = input(defval = timestamp("30 Dec 2021 23:30 +0000"), title = "End Time", type = input.time, group="Date")
 
-TradeDateIsAllowed() => DateFilter ? time >= i_startTime and time <= i_endTime : true
+// TradeDateIsAllowed() => DateFilter ? time >= i_startTime and time <= i_endTime : true
 
 
 // Functions
@@ -744,13 +744,14 @@ buy_28_logic = (buy_28_protections and (moderi_64) and (close < (hull_75 * 0.92)
 // // // #############################################################
 // // // Sell Conditions
 
-// sell_01_logic = ((close > bb20_2_upp) and (close[1] > bb20_2_upp[1]) and (close[2] > bb20_2_upp[2]) and (close[3] > bb20_2_upp[3]) and (close[4] > bb20_2_upp[4]) and (close[5] > bb20_2_upp[5]))
-// sell_02_logic = ((rsi_5m > sell_rsi_bb_2) and (close > bb20_2_upp) and (close[1] > bb20_2_upp[1]) and (close[2] > bb20_2_upp[2]))
+sell_01_logic = ((rsi_5m > sell_rsi_bb_1) and (close > bb20_2_upp) and (close[1] > bb20_2_upp[1]) and (close[2] > bb20_2_upp[2]) and (close[3] > bb20_2_upp[3]) and (close[4] > bb20_2_upp[4]) and (close[5] > bb20_2_upp[5]))
+sell_02_logic = ((rsi_5m > sell_rsi_bb_2) and (close > bb20_2_upp) and (close[1] > bb20_2_upp[1]) and (close[2] > bb20_2_upp[2]))
 // sell_03_logic = (rsi_5m > sell_rsi_main_3)
-// sell_04_logic = ((rsi_5m > sell_dual_rsi_rsi_4) and (rsi_1h > sell_dual_rsi_rsi_1h_4))
-// sell_06_logic = ((close < ema_200) and (close > ema_50) and (rsi_5m > sell_rsi_under_6))
-// sell_07_logic = ((rsi_1h > sell_rsi_1h_7) and (crossunder(ema_12, ema_26)))
-// sell_08_logic = (close > (bb20_2_upp_1h * sell_bb_relative_8))
+sell_04_logic = ((rsi_5m > sell_dual_rsi_rsi_4) and (rsi_1h > sell_dual_rsi_rsi_1h_4))
+sell_06_logic = ((close < ema_200) and (close > ema_50) and (rsi_5m > sell_rsi_under_6))
+sell_07_logic = ((rsi_1h > sell_rsi_1h_7) and (crossed_below_ema_12_26))
+sell_08_logic = (close > (bb20_2_upp_1h * sell_bb_relative_8))
+
 
 plotshape(buy_01_logic, title="1", text="1", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
 plotshape(buy_02_logic, title="2", text="2", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
@@ -782,13 +783,13 @@ plotshape(buy_27_logic, title="27", text="27", location=location.belowbar, style
 plotshape(buy_28_logic, title="28", text="28", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
 
 
-// plotshape(sell_01_logic, title="1", text="1", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
-// plotshape(sell_02_logic, title="2", text="2", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_01_logic, title="1", text="1", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_02_logic, title="2", text="2", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
 // plotshape(sell_03_logic, title="3", text="3", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
-// plotshape(sell_04_logic, title="4", text="4", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
-// plotshape(sell_06_logic, title="5", text="5", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
-// plotshape(sell_07_logic, title="6", text="6", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
-// plotshape(sell_08_logic, title="7", text="7", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_04_logic, title="4", text="4", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_06_logic, title="5", text="5", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_07_logic, title="6", text="6", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_08_logic, title="7", text="7", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
 
 // long_signal = (buy_01_logic or buy_02_logic or buy_03_logic or buy_04_logic or buy_05_logic or buy_06_logic or buy_07_logic or buy_08_logic or buy_09_logic or buy_10_logic or buy_11_logic or buy_12_logic or buy_13_logic or buy_14_logic or buy_15_logic or buy_16_logic or buy_17_logic or buy_18_logic or buy_19_logic or buy_20_logic or buy_21_logic or buy_22_logic or buy_23_logic or buy_24_logic or buy_26_logic)
 
