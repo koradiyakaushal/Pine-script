@@ -20,7 +20,7 @@
 
 //@version=4
 
-SystemName = "NFI v7.2 Strategy"
+SystemName = "NFI v7.2"
 is_overlay = true
 InitCapital = 100
 InitPosition = 100
@@ -187,32 +187,6 @@ buy_condition_26_enable = true, buy_26_btc_1h_not_downtrend = false, buy_26_prot
 buy_condition_27_enable = true, buy_27_btc_1h_not_downtrend = true, buy_27_protection__ema_fast = false, buy_27_protection__ema_fast_len = 50, buy_27_protection__ema_slow = false, buy_27_protection__ema_slow_len = 100, buy_27_protection__close_above_ema_fast  = false, buy_27_protection__close_above_ema_fast_len = 50, buy_27_protection__close_above_ema_slow = false, buy_27_protection__close_above_ema_slow_len = 200, buy_27_protection__sma200_rising = false, buy_27_protection__sma200_rising_val = 30, buy_27_protection__sma200_1h_rising = false, buy_27_protection__sma200_1h_rising_val = 50, buy_27_protection__safe_dips = false, buy_27_protection__safe_dips_type = 10, buy_27_protection__safe_pump = true, buy_27_protection__safe_pump_type = 50, buy_27_protection__safe_pump_period = 36
 buy_condition_28_enable = true, buy_28_btc_1h_not_downtrend = true, buy_28_protection__ema_fast = false, buy_28_protection__ema_fast_len = 50, buy_28_protection__ema_slow = false, buy_28_protection__ema_slow_len = 100, buy_28_protection__close_above_ema_fast  = false, buy_28_protection__close_above_ema_fast_len = 50, buy_28_protection__close_above_ema_slow = false, buy_28_protection__close_above_ema_slow_len = 200, buy_28_protection__sma200_rising = false, buy_28_protection__sma200_rising_val = 30, buy_28_protection__sma200_1h_rising = false, buy_28_protection__sma200_1h_rising_val = 50, buy_28_protection__safe_dips = false, buy_28_protection__safe_dips_type = 10, buy_28_protection__safe_pump = true, buy_28_protection__safe_pump_type = 110, buy_28_protection__safe_pump_period = 36
 
-// older
-// buy_condition_1_enable = true, buy_1_btc_1h_not_downtrend=false, buy_01_protection__ema_fast = false,  buy_01_protection__ema_fast_len  = 26,  buy_01_protection__ema_slow = true,  buy_01_protection__ema_slow_len  = 100,  buy_01_protection__close_above_ema_fast     = false,  buy_01_protection__close_above_ema_fast_len = 200,  buy_01_protection__close_above_ema_slow = false,  buy_01_protection__close_above_ema_slow_len = 200,  buy_01_protection__sma200_rising = true,  buy_01_protection__sma200_rising_val  = 28,  buy_01_protection__sma200_1h_rising = false,  buy_01_protection__sma200_1h_rising_val = 50,  buy_01_protection__safe_dips = true,  buy_01_protection__safe_dips_type = 80,  buy_01_protection__safe_pump = true,  buy_01_protection__safe_pump_type = 70,  buy_01_protection__safe_pump_period = 24
-// buy_condition_2_enable = true, buy_2_btc_1h_not_downtrend=false, buy_02_protection__close_above_ema_fast = false,  buy_02_protection__close_above_ema_fast_len = 200,  buy_02_protection__close_above_ema_slow = false,  buy_02_protection__close_above_ema_slow_len = 200,  buy_02_protection__ema_fast = false,  buy_02_protection__ema_fast_len  = 50,  buy_02_protection__ema_slow = true,  buy_02_protection__ema_slow_len = 20,  buy_02_protection__safe_dips = true,  buy_02_protection__safe_dips_type = 50,  buy_02_protection__safe_pump = false,  buy_02_protection__safe_pump_type = 10,  buy_02_protection__safe_pump_period = 24,  buy_02_protection__sma200_rising = false,  buy_02_protection__sma200_rising_val  = 50,  buy_02_protection__sma200_1h_rising = false,  buy_02_protection__sma200_1h_rising_val = 50
-// buy_condition_3_enable = true, buy_3_btc_1h_not_downtrend=false, buy_03_protection__close_above_ema_fast = false,  buy_03_protection__close_above_ema_fast_len = 200,  buy_03_protection__close_above_ema_slow = false,  buy_03_protection__close_above_ema_slow_len = 200,  buy_03_protection__ema_fast = true,  buy_03_protection__ema_fast_len = 100,  buy_03_protection__ema_slow = true,  buy_03_protection__ema_slow_len = 100,  buy_03_protection__safe_dips = false,  buy_03_protection__safe_dips_type = 10,  buy_03_protection__safe_pump = true,  buy_03_protection__safe_pump_type = 100,  buy_03_protection__safe_pump_period = 36,  buy_03_protection__sma200_rising = false,  buy_03_protection__sma200_rising_val  = 50,  buy_03_protection__sma200_1h_rising = false,  buy_03_protection__sma200_1h_rising_val = 50
-// buy_condition_4_enable = true, buy_4_btc_1h_not_downtrend=false, buy_04_protection__close_above_ema_fast = false,  buy_04_protection__close_above_ema_fast_len = 200,  buy_04_protection__close_above_ema_slow = false,  buy_04_protection__close_above_ema_slow_len = 200,  buy_04_protection__ema_fast = false,  buy_04_protection__ema_fast_len = 50,  buy_04_protection__ema_slow = true,  buy_04_protection__ema_slow_len = 50,  buy_04_protection__safe_dips = true,  buy_04_protection__safe_dips_type = 40,  buy_04_protection__safe_pump = true,  buy_04_protection__safe_pump_type = 110,  buy_04_protection__safe_pump_period = 48,  buy_04_protection__sma200_rising = true,  buy_04_protection__sma200_rising_val  = 50,  buy_04_protection__sma200_1h_rising = false,  buy_04_protection__sma200_1h_rising_val = 20
-// buy_condition_5_enable = true, buy_5_btc_1h_not_downtrend=false, buy_05_protection__close_above_ema_fast = false,  buy_05_protection__close_above_ema_fast_len = 100,  buy_05_protection__close_above_ema_slow = false,  buy_05_protection__close_above_ema_slow_len = 200,  buy_05_protection__ema_fast = true,  buy_05_protection__ema_fast_len = 100,  buy_05_protection__ema_slow = false,  buy_05_protection__ema_slow_len = 50,  buy_05_protection__safe_dips = true,  buy_05_protection__safe_dips_type = 100,  buy_05_protection__safe_pump = true,  buy_05_protection__safe_pump_type = 20,  buy_05_protection__safe_pump_period = 36,  buy_05_protection__sma200_rising = false,  buy_05_protection__sma200_rising_val  = 50,  buy_05_protection__sma200_1h_rising = false,  buy_05_protection__sma200_1h_rising_val = 50
-// buy_condition_6_enable = true, buy_6_btc_1h_not_downtrend=false, buy_06_protection__ema_fast = false,  buy_06_protection__ema_fast_len = 50,  buy_06_protection__ema_slow = true,  buy_06_protection__ema_slow_len = 100,  buy_06_protection__close_above_ema_fast = false,  buy_06_protection__close_above_ema_fast_len  = 200,  buy_06_protection__close_above_ema_slow = false,  buy_06_protection__close_above_ema_slow_len  = 200,  buy_06_protection__sma200_rising  = false,  buy_06_protection__sma200_rising_val = 50,  buy_06_protection__sma200_1h_rising = false,  buy_06_protection__sma200_1h_rising_val = 50,  buy_06_protection__safe_dips = true,  buy_06_protection__safe_dips_type = 50,  buy_06_protection__safe_pump = true,  buy_06_protection__safe_pump_type = 20,  buy_06_protection__safe_pump_period = 36
-// buy_condition_7_enable = true, buy_7_btc_1h_not_downtrend=false, buy_07_protection__ema_fast = true,  buy_07_protection__ema_fast_len = 100,  buy_07_protection__ema_slow = true,  buy_07_protection__ema_slow_len = 12,  buy_07_protection__close_above_ema_fast = false,  buy_07_protection__close_above_ema_fast_len  = 200,  buy_07_protection__close_above_ema_slow = false,  buy_07_protection__close_above_ema_slow_len  = 200,  buy_07_protection__sma200_rising  = false,  buy_07_protection__sma200_rising_val = 50,  buy_07_protection__sma200_1h_rising = false,  buy_07_protection__sma200_1h_rising_val = 50,  buy_07_protection__safe_dips = false,  buy_07_protection__safe_dips_type = 50,  buy_07_protection__safe_pump = false,  buy_07_protection__safe_pump_type = 50,  buy_07_protection__safe_pump_period = 24
-// buy_condition_8_enable = true, buy_8_btc_1h_not_downtrend=false, buy_08_protection__ema_fast = false,  buy_08_protection__ema_fast_len = 50,  buy_08_protection__ema_slow = true,  buy_08_protection__ema_slow_len = 12,  buy_08_protection__close_above_ema_fast = true,  buy_08_protection__close_above_ema_fast_len  = 200,  buy_08_protection__close_above_ema_slow = false,  buy_08_protection__close_above_ema_slow_len  = 200,  buy_08_protection__sma200_rising  = false,  buy_08_protection__sma200_rising_val = 50,  buy_08_protection__sma200_1h_rising = false,  buy_08_protection__sma200_1h_rising_val = 50,  buy_08_protection__safe_dips = false,  buy_08_protection__safe_dips_type = 100,  buy_08_protection__safe_pump = true,  buy_08_protection__safe_pump_type = 120,  buy_08_protection__safe_pump_period = 24
-// buy_condition_9_enable = true, buy_9_btc_1h_not_downtrend=false, buy_09_protection__ema_fast = true,  buy_09_protection__ema_fast_len = 100,  buy_09_protection__ema_slow = false,  buy_09_protection__ema_slow_len = 50,  buy_09_protection__close_above_ema_fast = false,  buy_09_protection__close_above_ema_fast_len  = 200,  buy_09_protection__close_above_ema_slow = false,  buy_09_protection__close_above_ema_slow_len  = 200,  buy_09_protection__sma200_rising  = false,  buy_09_protection__sma200_rising_val = 50,  buy_09_protection__sma200_1h_rising = false,  buy_09_protection__sma200_1h_rising_val = 50,  buy_09_protection__safe_dips = false,  buy_09_protection__safe_dips_type = 10,  buy_09_protection__safe_pump = false,  buy_09_protection__safe_pump_type = 50,  buy_09_protection__safe_pump_period = 24
-// buy_condition_10_enable = true, buy_10_btc_1h_not_downtrend=false, buy_10_protection__ema_fast = false,  buy_10_protection__ema_fast_len = 50,  buy_10_protection__ema_slow = true,  buy_10_protection__ema_slow_len = 50,  buy_10_protection__close_above_ema_fast = false,  buy_10_protection__close_above_ema_fast_len  = 200,  buy_10_protection__close_above_ema_slow = false,  buy_10_protection__close_above_ema_slow_len  = 200,  buy_10_protection__sma200_rising  = false,  buy_10_protection__sma200_rising_val = 50,  buy_10_protection__sma200_1h_rising = false,  buy_10_protection__sma200_1h_rising_val = 24,  buy_10_protection__safe_dips = true,  buy_10_protection__safe_dips_type = 100,  buy_10_protection__safe_pump = false,  buy_10_protection__safe_pump_type = 50,  buy_10_protection__safe_pump_period = 24
-// buy_condition_11_enable = true, buy_11_btc_1h_not_downtrend=false, buy_11_protection__ema_fast = false,  buy_11_protection__ema_fast_len = 50,  buy_11_protection__ema_slow = false,  buy_11_protection__ema_slow_len = 50,  buy_11_protection__close_above_ema_fast = false,  buy_11_protection__close_above_ema_fast_len  = 200,  buy_11_protection__close_above_ema_slow = false,  buy_11_protection__close_above_ema_slow_len  = 200,  buy_11_protection__sma200_rising  = false,  buy_11_protection__sma200_rising_val = 50,  buy_11_protection__sma200_1h_rising = false,  buy_11_protection__sma200_1h_rising_val = 50,  buy_11_protection__safe_dips = false,  buy_11_protection__safe_dips_type = 100,  buy_11_protection__safe_pump = true,  buy_11_protection__safe_pump_type = 50,  buy_11_protection__safe_pump_period = 24
-// buy_condition_12_enable = true, buy_12_btc_1h_not_downtrend=false, buy_12_protection__ema_fast = false,  buy_12_protection__ema_fast_len = 50,  buy_12_protection__ema_slow = false,  buy_12_protection__ema_slow_len = 50,  buy_12_protection__close_above_ema_fast = false,  buy_12_protection__close_above_ema_fast_len  = 200,  buy_12_protection__close_above_ema_slow = false,  buy_12_protection__close_above_ema_slow_len  = 200,  buy_12_protection__sma200_rising  = false,  buy_12_protection__sma200_rising_val = 50,  buy_12_protection__sma200_1h_rising = true,  buy_12_protection__sma200_1h_rising_val = 24,  buy_12_protection__safe_dips = false,  buy_12_protection__safe_dips_type = 100,  buy_12_protection__safe_pump = false,  buy_12_protection__safe_pump_type = 50,  buy_12_protection__safe_pump_period = 24
-// buy_condition_13_enable = true, buy_13_btc_1h_not_downtrend=false, buy_13_protection__ema_fast = false,  buy_13_protection__ema_fast_len = 50,  buy_13_protection__ema_slow = false,  buy_13_protection__ema_slow_len = 50,  buy_13_protection__close_above_ema_fast = false,  buy_13_protection__close_above_ema_fast_len  = 200,  buy_13_protection__close_above_ema_slow = false,  buy_13_protection__close_above_ema_slow_len  = 200,  buy_13_protection__sma200_rising  = false,  buy_13_protection__sma200_rising_val = 50,  buy_13_protection__sma200_1h_rising = true,  buy_13_protection__sma200_1h_rising_val = 24,  buy_13_protection__safe_dips = true,  buy_13_protection__safe_dips_type = 10,  buy_13_protection__safe_pump = false,  buy_13_protection__safe_pump_type = 50,  buy_13_protection__safe_pump_period = 24
-// buy_condition_14_enable = true, buy_14_btc_1h_not_downtrend=false, buy_14_protection__ema_fast = false,  buy_14_protection__ema_fast_len = 50,  buy_14_protection__ema_slow = false,  buy_14_protection__ema_slow_len = 50,  buy_14_protection__close_above_ema_fast = false,  buy_14_protection__close_above_ema_fast_len  = 200,  buy_14_protection__close_above_ema_slow = false,  buy_14_protection__close_above_ema_slow_len  = 200,  buy_14_protection__sma200_rising  = true,  buy_14_protection__sma200_rising_val = 30,  buy_14_protection__sma200_1h_rising = true,  buy_14_protection__sma200_1h_rising_val = 50,  buy_14_protection__safe_dips = true,  buy_14_protection__safe_dips_type = 10,  buy_14_protection__safe_pump = true,  buy_14_protection__safe_pump_type = 70,  buy_14_protection__safe_pump_period = 24
-// buy_condition_15_enable = true, buy_15_btc_1h_not_downtrend=false, buy_15_protection__ema_fast = false,  buy_15_protection__ema_fast_len = 50,  buy_15_protection__ema_slow = true,  buy_15_protection__ema_slow_len = 50,  buy_15_protection__close_above_ema_fast = false,  buy_15_protection__close_above_ema_fast_len  = 200,  buy_15_protection__close_above_ema_slow = false,  buy_15_protection__close_above_ema_slow_len  = 200,  buy_15_protection__sma200_rising  = false,  buy_15_protection__sma200_rising_val = 50,  buy_15_protection__sma200_1h_rising = false,  buy_15_protection__sma200_1h_rising_val = 50,  buy_15_protection__safe_dips = true,  buy_15_protection__safe_dips_type = 50,  buy_15_protection__safe_pump = true,  buy_15_protection__safe_pump_type = 10,  buy_15_protection__safe_pump_period = 36
-// buy_condition_16_enable = true, buy_16_btc_1h_not_downtrend=false, buy_16_protection__ema_fast = false,  buy_16_protection__ema_fast_len = 50,  buy_16_protection__ema_slow = true,  buy_16_protection__ema_slow_len = 50,  buy_16_protection__close_above_ema_fast = false,  buy_16_protection__close_above_ema_fast_len  = 200,  buy_16_protection__close_above_ema_slow = false,  buy_16_protection__close_above_ema_slow_len  = 50,  buy_16_protection__sma200_rising  = false,  buy_16_protection__sma200_rising_val = 50,  buy_16_protection__sma200_1h_rising = false,  buy_16_protection__sma200_1h_rising_val = 50,  buy_16_protection__safe_dips = true,  buy_16_protection__safe_dips_type = 10,  buy_16_protection__safe_pump = true,  buy_16_protection__safe_pump_type = 10,  buy_16_protection__safe_pump_period = 24
-// buy_condition_17_enable = true, buy_17_btc_1h_not_downtrend=false, buy_17_protection__ema_fast = false,  buy_17_protection__ema_fast_len = 50,  buy_17_protection__ema_slow = false,  buy_17_protection__ema_slow_len = 50,  buy_17_protection__close_above_ema_fast = false,  buy_17_protection__close_above_ema_fast_len  = 200,  buy_17_protection__close_above_ema_slow = false,  buy_17_protection__close_above_ema_slow_len  = 200,  buy_17_protection__sma200_rising  = false,  buy_17_protection__sma200_rising_val = 50,  buy_17_protection__sma200_1h_rising = false,  buy_17_protection__sma200_1h_rising_val = 50,  buy_17_protection__safe_dips = true,  buy_17_protection__safe_dips_type = 10,  buy_17_protection__safe_pump = true,  buy_17_protection__safe_pump_type = 120,  buy_17_protection__safe_pump_period = 24
-// buy_condition_18_enable = true, buy_18_btc_1h_not_downtrend=false, buy_18_protection__ema_fast = true,  buy_18_protection__ema_fast_len = 100,  buy_18_protection__ema_slow = true,  buy_18_protection__ema_slow_len = 50,  buy_18_protection__close_above_ema_fast = false,  buy_18_protection__close_above_ema_fast_len  = 200,  buy_18_protection__close_above_ema_slow = true,  buy_18_protection__close_above_ema_slow_len  = 200,  buy_18_protection__sma200_rising  = true,  buy_18_protection__sma200_rising_val = 44,  buy_18_protection__sma200_1h_rising = true,  buy_18_protection__sma200_1h_rising_val = 72,  buy_18_protection__safe_dips = true,  buy_18_protection__safe_dips_type = 50,  buy_18_protection__safe_pump = true,  buy_18_protection__safe_pump_type = 60,  buy_18_protection__safe_pump_period = 24
-// buy_condition_19_enable = true, buy_19_btc_1h_not_downtrend=false, buy_19_protection__ema_fast = false,  buy_19_protection__ema_fast_len = 50,  buy_19_protection__ema_slow = true,  buy_19_protection__ema_slow_len = 100,  buy_19_protection__close_above_ema_fast = false,  buy_19_protection__close_above_ema_fast_len  = 200,  buy_19_protection__close_above_ema_slow = false,  buy_19_protection__close_above_ema_slow_len  = 200,  buy_19_protection__sma200_rising  = true,  buy_19_protection__sma200_rising_val = 36,  buy_19_protection__sma200_1h_rising = false,  buy_19_protection__sma200_1h_rising_val = 50,  buy_19_protection__safe_dips = true,  buy_19_protection__safe_dips_type = 50,  buy_19_protection__safe_pump = true,  buy_19_protection__safe_pump_type = 50,  buy_19_protection__safe_pump_period = 24
-// buy_condition_20_enable = true, buy_20_btc_1h_not_downtrend=false, buy_20_protection__ema_fast = false,  buy_20_protection__ema_fast_len = 50,  buy_20_protection__ema_slow = true,  buy_20_protection__ema_slow_len = 50,  buy_20_protection__close_above_ema_fast = false,  buy_20_protection__close_above_ema_fast_len  = 200,  buy_20_protection__close_above_ema_slow = false,  buy_20_protection__close_above_ema_slow_len  = 200,  buy_20_protection__sma200_rising  = false,  buy_20_protection__sma200_rising_val = 50,  buy_20_protection__sma200_1h_rising = false,  buy_20_protection__sma200_1h_rising_val = 50,  buy_20_protection__safe_dips = false,  buy_20_protection__safe_dips_type = 10,  buy_20_protection__safe_pump = false,  buy_20_protection__safe_pump_type = 50,  buy_20_protection__safe_pump_period = 24
-// buy_condition_21_enable = true, buy_21_btc_1h_not_downtrend=false, buy_21_protection__ema_fast = false,  buy_21_protection__ema_fast_len = 50,  buy_21_protection__ema_slow = true,  buy_21_protection__ema_slow_len = 50,  buy_21_protection__close_above_ema_fast = false,  buy_21_protection__close_above_ema_fast_len  = 200,  buy_21_protection__close_above_ema_slow = false,  buy_21_protection__close_above_ema_slow_len  = 200,  buy_21_protection__sma200_rising  = false,  buy_21_protection__sma200_rising_val = 50,  buy_21_protection__sma200_1h_rising = false,  buy_21_protection__sma200_1h_rising_val = 50,  buy_21_protection__safe_dips = true,  buy_21_protection__safe_dips_type = 90,  buy_21_protection__safe_pump = false,  buy_21_protection__safe_pump_type = 50,  buy_21_protection__safe_pump_period = 24
-// buy_condition_22_enable = true, buy_22_btc_1h_not_downtrend=false, buy_22_protection__ema_fast = false,  buy_22_protection__ema_fast_len = 50,  buy_22_protection__ema_slow = false,  buy_22_protection__ema_slow_len = 50,  buy_22_protection__close_above_ema_fast = false,  buy_22_protection__close_above_ema_fast_len  = 200,  buy_22_protection__close_above_ema_slow = false,  buy_22_protection__close_above_ema_slow_len  = 200,  buy_22_protection__sma200_rising  = false,  buy_22_protection__sma200_rising_val = 50,  buy_22_protection__sma200_1h_rising = false,  buy_22_protection__sma200_1h_rising_val = 50,  buy_22_protection__safe_dips = false,  buy_22_protection__safe_dips_type = 10,  buy_22_protection__safe_pump = false,  buy_22_protection__safe_pump_type = 50,  buy_22_protection__safe_pump_period = 24
-// buy_condition_23_enable = true, buy_23_btc_1h_not_downtrend=false, buy_23_protection__ema_fast = false,  buy_23_protection__ema_fast_len = 50,  buy_23_protection__ema_slow = false,  buy_23_protection__ema_slow_len = 50,  buy_23_protection__close_above_ema_fast = true,  buy_23_protection__close_above_ema_fast_len  = 200,  buy_23_protection__close_above_ema_slow = true,  buy_23_protection__close_above_ema_slow_len  = 200,  buy_23_protection__sma200_rising  = false,  buy_23_protection__sma200_rising_val = 50,  buy_23_protection__sma200_1h_rising = false,  buy_23_protection__sma200_1h_rising_val = 50,  buy_23_protection__safe_dips = true,  buy_23_protection__safe_dips_type = 100,  buy_23_protection__safe_pump = false,  buy_23_protection__safe_pump_type = 50,  buy_23_protection__safe_pump_period = 24
-// buy_condition_24_enable = true, buy_24_btc_1h_not_downtrend=false, buy_24_protection__ema_fast = false,  buy_24_protection__ema_fast_len = 50,  buy_24_protection__ema_slow = false,  buy_24_protection__ema_slow_len = 50,  buy_24_protection__close_above_ema_fast = false,  buy_24_protection__close_above_ema_fast_len  = 200,  buy_24_protection__close_above_ema_slow = false,  buy_24_protection__close_above_ema_slow_len  = 200,  buy_24_protection__sma200_rising  = true,  buy_24_protection__sma200_rising_val = 30,  buy_24_protection__sma200_1h_rising = true,  buy_24_protection__sma200_1h_rising_val = 36,  buy_24_protection__safe_dips = true,  buy_24_protection__safe_dips_type = 10,  buy_24_protection__safe_pump = false,  buy_24_protection__safe_pump_type = 50,  buy_24_protection__safe_pump_period = 24
-// buy_condition_26_enable = true, buy_26_btc_1h_not_downtrend=false, buy_26_protection__optimize = false,  buy_26_parameters__optimize = false,  buy_26_protection__ema_fast = false,  buy_26_protection__ema_fast_len = 50,  buy_26_protection__ema_slow = true,  buy_26_protection__ema_slow_len = 100,  buy_26_protection__close_above_ema_fast = true,  buy_26_protection__close_above_ema_fast_len = 50,  buy_26_protection__close_above_ema_slow = true,  buy_26_protection__close_above_ema_slow_len = 200,  buy_26_protection__sma200_rising = false,  buy_26_protection__sma200_rising_val  = 30,  buy_26_protection__sma200_1h_rising = false,  buy_26_protection__sma200_1h_rising_val  = 50,  buy_26_protection__safe_dips = true,  buy_26_protection__safe_dips_type = 10,  buy_26_protection__safe_pump = true,  buy_26_protection__safe_pump_type = 100,  buy_26_protection__safe_pump_period = 48
 
 //# Strict dips - level 10
 buy_dip_threshold_10_1 = 0.015, buy_dip_threshold_10_2 = 0.1, buy_dip_threshold_10_3 = 0.24, buy_dip_threshold_10_4 = 0.42
@@ -565,7 +539,7 @@ sell_custom_recover_profit_1 = 0.06, sell_custom_recover_min_loss_1 = 0.12
 sell_custom_recover_profit_min_2 = 0.01, sell_custom_recover_profit_max_2 = 0.05, sell_custom_recover_min_loss_2 = 0.06, sell_custom_recover_rsi_2 = 46.0
 
 // # Profit for long duration trades
-sell_custom_long_profit_min_1 = 0.03, sell_custom_long_profit_max_1 = 0.04, sell_custom_long_duration_min_1 = 900
+sell_custom_long_profit_min_1 = 0.03, sell_custom_long_profit_max_1 = 0.04, sell_custom_long_duration_min_1 = 180
 
 
 // Protections
@@ -744,13 +718,14 @@ buy_28_logic = (buy_28_protections and (moderi_64) and (close < (hull_75 * 0.92)
 // // // #############################################################
 // // // Sell Conditions
 
-// sell_01_logic = ((close > bb20_2_upp) and (close[1] > bb20_2_upp[1]) and (close[2] > bb20_2_upp[2]) and (close[3] > bb20_2_upp[3]) and (close[4] > bb20_2_upp[4]) and (close[5] > bb20_2_upp[5]))
-// sell_02_logic = ((rsi_5m > sell_rsi_bb_2) and (close > bb20_2_upp) and (close[1] > bb20_2_upp[1]) and (close[2] > bb20_2_upp[2]))
+sell_01_logic = ((rsi_5m > sell_rsi_bb_1) and (close > bb20_2_upp) and (close[1] > bb20_2_upp[1]) and (close[2] > bb20_2_upp[2]) and (close[3] > bb20_2_upp[3]) and (close[4] > bb20_2_upp[4]) and (close[5] > bb20_2_upp[5]))
+sell_02_logic = ((rsi_5m > sell_rsi_bb_2) and (close > bb20_2_upp) and (close[1] > bb20_2_upp[1]) and (close[2] > bb20_2_upp[2]))
 // sell_03_logic = (rsi_5m > sell_rsi_main_3)
-// sell_04_logic = ((rsi_5m > sell_dual_rsi_rsi_4) and (rsi_1h > sell_dual_rsi_rsi_1h_4))
-// sell_06_logic = ((close < ema_200) and (close > ema_50) and (rsi_5m > sell_rsi_under_6))
-// sell_07_logic = ((rsi_1h > sell_rsi_1h_7) and (crossunder(ema_12, ema_26)))
-// sell_08_logic = (close > (bb20_2_upp_1h * sell_bb_relative_8))
+sell_04_logic = ((rsi_5m > sell_dual_rsi_rsi_4) and (rsi_1h > sell_dual_rsi_rsi_1h_4))
+sell_06_logic = ((close < ema_200) and (close > ema_50) and (rsi_5m > sell_rsi_under_6))
+sell_07_logic = ((rsi_1h > sell_rsi_1h_7) and (crossed_below_ema_12_26))
+sell_08_logic = (close > (bb20_2_upp_1h * sell_bb_relative_8))
+
 
 plotshape(buy_01_logic, title="1", text="1", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
 plotshape(buy_02_logic, title="2", text="2", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
@@ -782,197 +757,393 @@ plotshape(buy_27_logic, title="27", text="27", location=location.belowbar, style
 plotshape(buy_28_logic, title="28", text="28", location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.green, textcolor=color.white)
 
 
-// plotshape(sell_01_logic, title="1", text="1", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
-// plotshape(sell_02_logic, title="2", text="2", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_01_logic, title="1", text="1", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_02_logic, title="2", text="2", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
 // plotshape(sell_03_logic, title="3", text="3", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
-// plotshape(sell_04_logic, title="4", text="4", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
-// plotshape(sell_06_logic, title="5", text="5", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
-// plotshape(sell_07_logic, title="6", text="6", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
-// plotshape(sell_08_logic, title="7", text="7", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_04_logic, title="4", text="4", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_06_logic, title="5", text="5", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_07_logic, title="6", text="6", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
+plotshape(sell_08_logic, title="7", text="7", location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.red, textcolor=color.white)
 
-// long_signal = (buy_01_logic or buy_02_logic or buy_03_logic or buy_04_logic or buy_05_logic or buy_06_logic or buy_07_logic or buy_08_logic or buy_09_logic or buy_10_logic or buy_11_logic or buy_12_logic or buy_13_logic or buy_14_logic or buy_15_logic or buy_16_logic or buy_17_logic or buy_18_logic or buy_19_logic or buy_20_logic or buy_21_logic or buy_22_logic or buy_23_logic or buy_24_logic or buy_26_logic)
+long_signal = (buy_01_logic or buy_02_logic or buy_03_logic or buy_04_logic or buy_05_logic or buy_06_logic or buy_07_logic or buy_08_logic or buy_09_logic or buy_10_logic or buy_11_logic or buy_12_logic or buy_13_logic or buy_14_logic or buy_15_logic or buy_16_logic or buy_17_logic or buy_18_logic or buy_19_logic or buy_20_logic or buy_21_logic or buy_22_logic or buy_23_logic or buy_24_logic or buy_25_logic or buy_26_logic or buy_27_logic or buy_28_logic)
 
-// sell_signal = (sell_01_logic or sell_02_logic or sell_03_logic or sell_04_logic or sell_06_logic or sell_07_logic or sell_08_logic)
+sell_signal = (sell_01_logic or sell_02_logic or sell_04_logic or sell_06_logic or sell_07_logic or sell_08_logic)
 
-// // Entry Price
-// // entry_price = valuewhen(condition=long_signal, source=close, occurrence=0)
+// Entry Price
+// entry_price = valuewhen(condition=long_signal, source=close, occurrence=0)
 
-// if (long_signal and TradeDateIsAllowed())
-//     strategy.entry("Long", strategy.long, alert_message="{{ticker}} Long Signal - Entry Price: " + tostring(close) + " Timeframe: {{interval}}")
+if (long_signal and TradeDateIsAllowed())
+    strategy.entry("Long", strategy.long, alert_message="{{ticker}} Long Signal - Entry Price: " + tostring(close) + " Timeframe: {{interval}}")
 
+// custom sell
 
-// if (strategy.position_size > 0)
-//     current_profit = ((close - strategy.position_avg_price) / strategy.position_avg_price)
+sell_over_main(current_profit) =>
+    is_valid = false, name = ""
 
-//     wasLongEntry = strategy.position_size > 0 and strategy.position_size != strategy.position_size[1]
-//     barsFromLong = barssince(wasLongEntry)
-//     priorbars = barsFromLong != na ? (barsFromLong + 1) : 1
-//     highest_high = highest(priorbars)
-//     lowest_low = lowest(priorbars)
-
-//     max_profit = ((highest_high - strategy.position_avg_price) / strategy.position_avg_price)
-//     max_loss = ((strategy.position_avg_price - lowest_low) / lowest_low)
-
-//     signal_profit_11 = ((current_profit > sell_custom_profit_11) and (rsi_5m < sell_custom_rsi_11))
-//     strategy.close(id="Long", comment="signal_profit_11", when=signal_profit_11)
-//     signal_profit_10 = ((sell_custom_profit_11 > current_profit) and (current_profit > sell_custom_profit_10) and (rsi_5m < sell_custom_rsi_10))
-//     strategy.close(id="Long", comment="signal_profit_10", when=signal_profit_10)
-//     signal_profit_9 = ((sell_custom_profit_10 > current_profit) and (current_profit > sell_custom_profit_9) and (rsi_5m < sell_custom_rsi_9))
-//     strategy.close(id="Long", comment="signal_profit_9", when=signal_profit_9)
-//     signal_profit_8 = ((sell_custom_profit_9 > current_profit) and (current_profit > sell_custom_profit_8) and (rsi_5m < sell_custom_rsi_8))
-//     strategy.close(id="Long", comment="signal_profit_8", when=signal_profit_8)
-//     signal_profit_7 = ((sell_custom_profit_8 > current_profit) and (current_profit > sell_custom_profit_7) and (rsi_5m < sell_custom_rsi_7))
-//     strategy.close(id="Long", comment="signal_profit_7", when=signal_profit_7)
-//     signal_profit_6 = ((sell_custom_profit_7 > current_profit) and (current_profit > sell_custom_profit_6) and (rsi_5m < sell_custom_rsi_6))
-//     strategy.close(id="Long", comment="signal_profit_6", when=signal_profit_6)
-//     signal_profit_5 = ((sell_custom_profit_6 > current_profit) and (current_profit > sell_custom_profit_5) and (rsi_5m < sell_custom_rsi_5))
-//     strategy.close(id="Long", comment="signal_profit_5", when=signal_profit_5)
-//     signal_profit_4 = ((sell_custom_profit_5 > current_profit) and (current_profit > sell_custom_profit_4) and (rsi_5m < sell_custom_rsi_4))
-//     strategy.close(id="Long", comment="signal_profit_4", when=signal_profit_4)
-//     signal_profit_3 = ((sell_custom_profit_4 > current_profit) and (current_profit > sell_custom_profit_3) and (rsi_5m < sell_custom_rsi_3))
-//     strategy.close(id="Long", comment="signal_profit_3", when=signal_profit_3)
-//     signal_profit_2 = ((sell_custom_profit_3 > current_profit) and (current_profit > sell_custom_profit_2) and (rsi_5m < sell_custom_rsi_2))
-//     strategy.close(id="Long", comment="signal_profit_2", when=signal_profit_2)
-//     signal_profit_1 = ((sell_custom_profit_2 > current_profit) and (current_profit > sell_custom_profit_1) and (rsi_5m < sell_custom_rsi_1))
-//     strategy.close(id="Long", comment="signal_profit_1", when=signal_profit_1)
-//     signal_profit_0 = ((sell_custom_profit_1 > current_profit) and (current_profit > sell_custom_profit_0) and (rsi_5m < sell_custom_rsi_0))
-//     strategy.close(id="Long", comment="signal_profit_0", when=signal_profit_0)
-
-//     // # check if close is under EMA200
-//     signal_profit_u_11 = ((current_profit > sell_custom_under_profit_11) and (rsi_5m < sell_custom_under_rsi_11))
-//     signal_profit_u_10 = ((sell_custom_under_profit_11 > current_profit) and (current_profit > sell_custom_under_profit_10) and (rsi_5m < sell_custom_under_rsi_10))
-//     signal_profit_u_9 = ((sell_custom_under_profit_10 > current_profit) and (current_profit > sell_custom_under_profit_9) and (rsi_5m < sell_custom_under_rsi_9))
-//     signal_profit_u_8 = ((sell_custom_under_profit_9 > current_profit) and (current_profit > sell_custom_under_profit_8) and (rsi_5m < sell_custom_under_rsi_8))
-//     signal_profit_u_7 = ((sell_custom_under_profit_8 > current_profit) and (current_profit > sell_custom_under_profit_7) and (rsi_5m < sell_custom_under_rsi_7))
-//     signal_profit_u_6 = ((sell_custom_under_profit_7 > current_profit) and (current_profit > sell_custom_under_profit_6) and (rsi_5m < sell_custom_under_rsi_6))
-//     signal_profit_u_5 = ((sell_custom_under_profit_6 > current_profit) and (current_profit > sell_custom_under_profit_5) and (rsi_5m < sell_custom_under_rsi_5))
-//     signal_profit_u_4 = ((sell_custom_under_profit_5 > current_profit) and (current_profit > sell_custom_under_profit_4) and (rsi_5m < sell_custom_under_rsi_4))
-//     signal_profit_u_3 = ((sell_custom_under_profit_4 > current_profit) and (current_profit > sell_custom_under_profit_3) and (rsi_5m < sell_custom_under_rsi_3))
-//     signal_profit_u_2 = ((sell_custom_under_profit_3 > current_profit) and (current_profit > sell_custom_under_profit_2) and (rsi_5m < sell_custom_under_rsi_2))
-//     signal_profit_u_1 = ((sell_custom_under_profit_2 > current_profit) and (current_profit > sell_custom_under_profit_1) and (rsi_5m < sell_custom_under_rsi_1) and (close < ema_200))
-//     signal_profit_u_0 = ((sell_custom_under_profit_1 > current_profit) and (current_profit > sell_custom_under_profit_0) and (rsi_5m < sell_custom_under_rsi_0))
-
-//     strategy.close(id="Long", comment="signal_profit_u_0", when=signal_profit_u_0)
-//     strategy.close(id="Long", comment="signal_profit_u_1", when=signal_profit_u_1)
-//     strategy.close(id="Long", comment="signal_profit_u_2", when=signal_profit_u_2)
-//     strategy.close(id="Long", comment="signal_profit_u_3", when=signal_profit_u_3)
-//     strategy.close(id="Long", comment="signal_profit_u_4", when=signal_profit_u_4)
-//     strategy.close(id="Long", comment="signal_profit_u_5", when=signal_profit_u_5)
-//     strategy.close(id="Long", comment="signal_profit_u_6", when=signal_profit_u_6)
-//     strategy.close(id="Long", comment="signal_profit_u_7", when=signal_profit_u_7)
-//     strategy.close(id="Long", comment="signal_profit_u_8", when=signal_profit_u_8)
-//     strategy.close(id="Long", comment="signal_profit_u_9", when=signal_profit_u_9)
-//     strategy.close(id="Long", comment="signal_profit_u_10", when=signal_profit_u_10)
-//     strategy.close(id="Long", comment="signal_profit_u_11", when=signal_profit_u_11)
-
-//     // # check if the pair is "pumped"
-//     signal_profit_p_1_5 = ((sell_pump_48_1) and (current_profit > sell_custom_pump_profit_1_5) and (rsi_5m < sell_custom_pump_rsi_1_5))
-//     signal_profit_p_1_4 = ((sell_pump_48_1) and (current_profit > sell_custom_pump_profit_1_4) and (rsi_5m < sell_custom_pump_rsi_1_4))
-//     signal_profit_p_1_3 = ((sell_pump_48_1) and (current_profit > sell_custom_pump_profit_1_3) and (rsi_5m < sell_custom_pump_rsi_1_3))
-//     signal_profit_p_1_2 = ((sell_pump_48_1) and (current_profit > sell_custom_pump_profit_1_2) and (rsi_5m < sell_custom_pump_rsi_1_2))
-//     signal_profit_p_1_1 = ((sell_pump_48_1) and (current_profit > sell_custom_pump_profit_1_1) and (rsi_5m < sell_custom_pump_rsi_1_1))
-
-//     strategy.close(id="Long", comment="signal_profit_p_1_5", when=signal_profit_p_1_5)
-//     strategy.close(id="Long", comment="signal_profit_p_1_4", when=signal_profit_p_1_4)
-//     strategy.close(id="Long", comment="signal_profit_p_1_3", when=signal_profit_p_1_3)
-//     strategy.close(id="Long", comment="signal_profit_p_1_2", when=signal_profit_p_1_2)
-//     strategy.close(id="Long", comment="signal_profit_p_1_1", when=signal_profit_p_1_1)
+    if (close > ema_200)
+        if (current_profit > sell_custom_profit_11)
+            if (rsi_5m < sell_custom_rsi_11 and ema_25 < ema_50)
+                is_valid := true, name := "signal_profit_11"
+        else if (current_profit > sell_custom_profit_10)
+            if (rsi_5m < sell_custom_rsi_10 and ema_25 < ema_50)
+                is_valid := true, name := "signal_profit_10"
+        else if (current_profit > sell_custom_profit_9)
+            if (rsi_5m < sell_custom_rsi_9 and ema_25 < ema_50)
+                is_valid := true, name := "signal_profit_9"
+        else if (current_profit > sell_custom_profit_8)
+            if (rsi_5m < sell_custom_rsi_8 and ema_25 < ema_50)
+                is_valid := true, name := "signal_profit_8"
+        else if (current_profit > sell_custom_profit_7)
+            if (rsi_5m < sell_custom_rsi_7 and ema_25 < ema_50 and cmf_5m < 0.0)
+                is_valid := true, name := "signal_profit_7"
+        else if (current_profit > sell_custom_profit_6)
+            if (rsi_5m < sell_custom_rsi_6 and ema_25 < ema_50 and cmf_5m < 0.0)
+                is_valid := true, name := "signal_profit_6"
+        else if (current_profit > sell_custom_profit_5)
+            if (rsi_5m < sell_custom_rsi_5 and ema_25 < ema_50 and cmf_5m < 0.0)
+                is_valid := true, name := "signal_profit_5"
+        else if (current_profit > sell_custom_profit_4)
+            if (rsi_5m < sell_custom_rsi_4 and ema_25 < ema_50 and cmf_5m < 0.0)
+                is_valid := true, name := "signal_profit_4"
+        else if (current_profit > sell_custom_profit_3)
+            if (rsi_5m < sell_custom_rsi_3 and ema_25 < ema_50 and cmf_5m < 0.0)
+                is_valid := true, name := "signal_profit_3"
+        else if (current_profit > sell_custom_profit_2)
+            if (rsi_5m < sell_custom_rsi_2 and ema_25 < ema_50 and cmf_5m < 0.0)
+                is_valid := true, name := "signal_profit_2"
+        else if (current_profit > sell_custom_profit_1)
+            if (rsi_5m < sell_custom_rsi_1 and ema_25 < ema_50 and cmf_5m < 0.0)
+                is_valid := true, name := "signal_profit_1"
+        else if (current_profit > sell_custom_profit_0)
+            if (rsi_5m < sell_custom_rsi_0 and ema_25 < ema_50 and cmf_5m < 0.0)
+                is_valid := true, name := "signal_profit_0"
+        else
+            is_valid := false, name := ""
+    else
+        is_valid := false, name := ""
     
-//     signal_profit_p_2_5 = ((sell_pump_36_1) and (current_profit > sell_custom_pump_profit_2_5) and (rsi_5m < sell_custom_pump_rsi_2_5))
-//     signal_profit_p_2_4 = ((sell_pump_36_1) and (current_profit > sell_custom_pump_profit_2_4) and (rsi_5m < sell_custom_pump_rsi_2_4))
-//     signal_profit_p_2_3 = ((sell_pump_36_1) and (current_profit > sell_custom_pump_profit_2_3) and (rsi_5m < sell_custom_pump_rsi_2_3))
-//     signal_profit_p_2_2 = ((sell_pump_36_1) and (current_profit > sell_custom_pump_profit_2_2) and (rsi_5m < sell_custom_pump_rsi_2_2))
-//     signal_profit_p_2_1 = ((sell_pump_36_1) and (current_profit > sell_custom_pump_profit_2_1) and (rsi_5m < sell_custom_pump_rsi_2_1))
+    [is_valid, name]
 
-//     strategy.close(id="Long", comment="signal_profit_p_2_5", when=signal_profit_p_2_5)
-//     strategy.close(id="Long", comment="signal_profit_p_2_4", when=signal_profit_p_2_4)
-//     strategy.close(id="Long", comment="signal_profit_p_2_3", when=signal_profit_p_2_3)
-//     strategy.close(id="Long", comment="signal_profit_p_2_2", when=signal_profit_p_2_2)
-//     strategy.close(id="Long", comment="signal_profit_p_2_1", when=signal_profit_p_2_1)
+sell_under_main(current_profit) =>
+    is_valid = false, name = ""
 
-//     signal_profit_p_3_5 = ((sell_pump_24_1) and (current_profit > sell_custom_pump_profit_3_5) and (rsi_5m < sell_custom_pump_rsi_3_5))
-//     signal_profit_p_3_4 = ((sell_pump_24_1) and (current_profit > sell_custom_pump_profit_3_4) and (rsi_5m < sell_custom_pump_rsi_3_4))
-//     signal_profit_p_3_3 = ((sell_pump_24_1) and (current_profit > sell_custom_pump_profit_3_3) and (rsi_5m < sell_custom_pump_rsi_3_3))
-//     signal_profit_p_3_2 = ((sell_pump_24_1) and (current_profit > sell_custom_pump_profit_3_2) and (rsi_5m < sell_custom_pump_rsi_3_2))
-//     signal_profit_p_3_1 = ((sell_pump_24_1) and (current_profit > sell_custom_pump_profit_3_1) and (rsi_5m < sell_custom_pump_rsi_3_1))
+    if (close > ema_200)
+        if (current_profit > sell_custom_under_profit_11 and rsi_5m < sell_custom_under_rsi_11 and ema_25 < ema_50)
+            is_valid := true, name := "signal_profit_u_11"
+        if (current_profit > sell_custom_under_profit_10 and rsi_5m < sell_custom_under_rsi_10 and ema_25 < ema_50)
+            is_valid := true, name := "signal_profit_u_10"
+        if (current_profit > sell_custom_under_profit_9 and rsi_5m < sell_custom_under_rsi_9 and ema_25 < ema_50)
+            is_valid := true, name := "signal_profit_u_9"
+        if (current_profit > sell_custom_under_profit_8 and rsi_5m < sell_custom_under_rsi_8 and ema_25 < ema_50)
+            is_valid := true, name := "signal_profit_u_8"
+        if (current_profit > sell_custom_under_profit_7 and rsi_5m < sell_custom_under_rsi_7 and ema_25 < ema_50)
+            is_valid := true, name := "signal_profit_u_7"
+        if (current_profit > sell_custom_under_profit_6 and rsi_5m < sell_custom_under_rsi_6 and ema_25 < ema_50)
+            is_valid := true, name := "signal_profit_u_6"
+        if (current_profit > sell_custom_under_profit_5 and rsi_5m < sell_custom_under_rsi_5 and ema_25 < ema_50)
+            is_valid := true, name := "signal_profit_u_5"
+        if (current_profit > sell_custom_under_profit_4 and rsi_5m < sell_custom_under_rsi_4)
+            is_valid := true, name := "signal_profit_u_4"
+        if (current_profit > sell_custom_under_profit_3 and rsi_5m < sell_custom_under_rsi_3)
+            is_valid := true, name := "signal_profit_u_3"
+        if (current_profit > sell_custom_under_profit_2 and rsi_5m < sell_custom_under_rsi_2)
+            is_valid := true, name := "signal_profit_u_2"
+        if (current_profit > sell_custom_under_profit_1 and rsi_5m < sell_custom_under_rsi_1)
+            is_valid := true, name := "signal_profit_u_1"
+        if (current_profit > sell_custom_under_profit_0 and rsi_5m < sell_custom_under_rsi_0 and cmf_5m < 0.0)
+            is_valid := true, name := "signal_profit_u_0"
+    else
+        is_valid := false, name := ""
 
-//     strategy.close(id="Long", comment="signal_profit_p_3_5", when=signal_profit_p_3_5)
-//     strategy.close(id="Long", comment="signal_profit_p_3_4", when=signal_profit_p_3_4)
-//     strategy.close(id="Long", comment="signal_profit_p_3_3", when=signal_profit_p_3_3)
-//     strategy.close(id="Long", comment="signal_profit_p_3_2", when=signal_profit_p_3_2)
-//     strategy.close(id="Long", comment="signal_profit_p_3_1", when=signal_profit_p_3_1)
+    [is_valid, name]
 
-//     signal_profit_d_1 = ((sell_custom_dec_profit_max_1 > current_profit) and (current_profit > sell_custom_dec_profit_min_1) and (sma_200_dec_20))
-//     signal_profit_d_2 = ((sell_custom_dec_profit_max_2 > current_profit) and (current_profit > sell_custom_dec_profit_min_2) and (close < ema_100))
+sell_pump_main(current_profit) =>
+    is_valid = false, name = ""
+    if (sell_pump_48_1)
+        if (current_profit > sell_custom_pump_profit_1_5 and rsi_5m < sell_custom_pump_rsi_1_5)
+            is_valid := true, name := "signal_profit_p_1_5"
+        else if (sell_custom_pump_profit_1_5 > current_profit and current_profit > sell_custom_pump_profit_1_4 and rsi_5m < sell_custom_pump_rsi_1_4)
+            is_valid := true, name := "signal_profit_p_1_4"
+        else if (sell_custom_pump_profit_1_4 > current_profit and current_profit > sell_custom_pump_profit_1_3 and rsi_5m < sell_custom_pump_rsi_1_3)
+            is_valid := true, name := "signal_profit_p_1_3"
+        else if (sell_custom_pump_profit_1_3 > current_profit and current_profit > sell_custom_pump_profit_1_2 and rsi_5m < sell_custom_pump_rsi_1_2)
+            is_valid := true, name := "signal_profit_p_1_2"
+        else if (sell_custom_pump_profit_1_2 > current_profit and current_profit > sell_custom_pump_profit_1_1 and rsi_5m < sell_custom_pump_rsi_1_1)
+            is_valid := true, name := "signal_profit_p_1_1"
+        else
+            is_valid := false, name := ""
+    else if (sell_pump_36_1)
+        if (current_profit > sell_custom_pump_profit_2_5 and rsi_5m < sell_custom_pump_rsi_2_5)
+            is_valid := true, name := "signal_profit_p_2_5"
+        else if (sell_custom_pump_profit_2_5 > current_profit and current_profit > sell_custom_pump_profit_2_4 and rsi_5m < sell_custom_pump_rsi_2_4)
+            is_valid := true, name := "signal_profit_p_2_4"
+        else if (sell_custom_pump_profit_2_4 > current_profit and current_profit > sell_custom_pump_profit_2_3 and rsi_5m < sell_custom_pump_rsi_2_3)
+            is_valid := true, name := "signal_profit_p_2_3"
+        else if (sell_custom_pump_profit_2_3 > current_profit and current_profit > sell_custom_pump_profit_2_2 and rsi_5m < sell_custom_pump_rsi_2_2)
+            is_valid := true, name := "signal_profit_p_2_2"
+        else if (sell_custom_pump_profit_2_2 > current_profit and current_profit > sell_custom_pump_profit_2_1 and rsi_5m < sell_custom_pump_rsi_2_1)
+            is_valid := true, name := "signal_profit_p_2_1"
+        else
+            is_valid := false, name := ""
+    else if (sell_pump_24_1)
+        if (current_profit > sell_custom_pump_profit_3_5 and rsi_5m < sell_custom_pump_rsi_3_5)
+            is_valid := true, name := "signal_profit_p_3_5"
+        else if (sell_custom_pump_profit_3_5 > current_profit and current_profit > sell_custom_pump_profit_3_4 and rsi_5m < sell_custom_pump_rsi_3_4)
+            is_valid := true, name := "signal_profit_p_3_4"
+        else if (sell_custom_pump_profit_3_4 > current_profit and current_profit > sell_custom_pump_profit_3_3 and rsi_5m < sell_custom_pump_rsi_3_3)
+            is_valid := true, name := "signal_profit_p_3_3"
+        else if (sell_custom_pump_profit_3_3 > current_profit and current_profit > sell_custom_pump_profit_3_2 and rsi_5m < sell_custom_pump_rsi_3_2)
+            is_valid := true, name := "signal_profit_p_3_2"
+        else if (sell_custom_pump_profit_3_2 > current_profit and current_profit > sell_custom_pump_profit_3_1 and rsi_5m < sell_custom_pump_rsi_3_1)
+            is_valid := true, name := "signal_profit_p_3_1"
+        else
+            is_valid := false, name := ""
+    else
+        is_valid := false, name := ""
 
-//     strategy.close(id="Long", comment="signal_profit_d_1", when=signal_profit_d_1)
-//     strategy.close(id="Long", comment="signal_profit_d_2", when=signal_profit_d_2)
+    [is_valid, name]
 
-//     // # Trailing
-//     signal_profit_t_1 = ((sell_trail_profit_max_1 > current_profit) and (current_profit > sell_trail_profit_min_1) and (sell_trail_rsi_min_1 < rsi_5m) and (rsi_5m < sell_trail_rsi_max_1) and (max_profit > (current_profit + sell_trail_down_1)))
-//     signal_profit_t_2 = (sell_trail_profit_max_2 > current_profit) and (current_profit > sell_trail_profit_min_2) and (sell_trail_rsi_min_2 < rsi_5m) and (rsi_5m < sell_trail_rsi_max_2) and (max_profit > (current_profit + sell_trail_down_2))
-//     signal_profit_t_3 = (sell_trail_profit_max_3 > current_profit) and (current_profit > sell_trail_profit_min_3) and (max_profit > (current_profit + sell_trail_down_3)) and (sma_200_dec_20_1h)
+sell_dec_main(current_profit) =>
+    is_valid = false, name = ""
+    if (sell_custom_dec_profit_max_1 > current_profit and current_profit > sell_custom_dec_profit_min_1 and sma_200_dec_20)
+        is_valid := true, name := "signal_profit_d_1"
+    else if (sell_custom_dec_profit_max_2 > current_profit and current_profit > sell_custom_dec_profit_min_2 and close < ema_100)
+        is_valid := true, name := "signal_profit_d_2"
+    else
+        is_valid := false, name := ""
 
-//     strategy.close(id="Long", comment="signal_profit_t_1", when=signal_profit_t_1)
-//     strategy.close(id="Long", comment="signal_profit_t_2", when=signal_profit_t_2)
-//     strategy.close(id="Long", comment="signal_profit_t_3", when=signal_profit_t_3)
+    [is_valid, name]
 
-//     signal_profit_u_t_1 = (close < ema_200) and (current_profit > sell_trail_profit_min_3) and (current_profit < sell_trail_profit_max_3) and (max_profit > (current_profit + sell_trail_down_3))
-//     strategy.close(id="Long", comment="signal_profit_u_t_1", when=signal_profit_u_t_1)
+sell_trail_main(current_profit, max_profit) =>
+    is_valid = false, name = ""
 
-//     signal_profit_u_e_1 = (current_profit > 0.0) and (close < ema_200) and (((ema_200 - close)/close) < sell_custom_profit_under_rel_1) and (rsi_5m > (rsi_1h + sell_custom_profit_under_rsi_diff_1))
-//     strategy.close(id="Long", comment="signal_profit_u_e_1", when=signal_profit_u_e_1)
+    if (sell_trail_profit_max_1 > current_profit and current_profit > sell_trail_profit_min_1 and sell_trail_rsi_min_1 < rsi_5m and rsi_5m < sell_trail_rsi_max_1 and max_profit > (current_profit + sell_trail_down_1))
+        is_valid := true, name := "signal_profit_t_1"
+    else if (sell_trail_profit_max_2 > current_profit and current_profit > sell_trail_profit_min_2 and sell_trail_rsi_min_2 < rsi_5m and rsi_5m < sell_trail_rsi_max_2 and max_profit > (current_profit + sell_trail_down_2) and ema_25 < ema_50)
+        is_valid := true, name := "signal_profit_t_2"
+    else if (sell_trail_profit_max_3 > current_profit and current_profit > sell_trail_profit_min_3 and max_profit > (current_profit + sell_trail_down_3) and sma_200_dec_20_1h)
+        is_valid := true, name := "signal_profit_t_3"
+    else if (sell_trail_profit_max_4 > current_profit and current_profit > sell_trail_profit_min_4 and max_profit > (current_profit + sell_trail_down_4) and sma_200_dec_24 and cmf_5m < 0.0)
+        is_valid := true, name := "signal_profit_t_4"
+    else if (close < ema_200 and current_profit > sell_trail_profit_min_3 and current_profit < sell_trail_profit_max_3 and max_profit > (current_profit + sell_trail_down_3))
+        is_valid := true, name := "signal_profit_u_t_1"
+    else
+        is_valid := false, name := ""
 
-//     signal_stoploss_u_1 = (current_profit < -0.0) and (close < ema_200) and (((ema_200 - close)/close) < sell_custom_stoploss_under_rel_1) and (rsi_5m > (rsi_1h + sell_custom_stoploss_under_rsi_diff_1)) and (sma_200_dec_24) and (barsFromLong >= 144)
-//     strategy.close(id="Long", comment="signal_stoploss_u_1", when=signal_stoploss_u_1)
+    [is_valid, name]
 
-//     signal_stoploss_l_r_u_1 = (sell_custom_stoploss_long_profit_min_1 < current_profit) and (current_profit < sell_custom_stoploss_long_profit_max_1) and (current_profit > (-max_loss + sell_custom_stoploss_long_recover_1)) and (close < ema_200) and (rsi_5m > (rsi_1h + sell_custom_stoploss_long_rsi_diff_1)) and (sma_200_dec_24) and (barsFromLong >= 240)
-//     signal_stoploss_l_r_u_2 = (current_profit < -0.0) and (current_profit > (-max_loss + sell_custom_stoploss_long_recover_2)) and (close < ema_200) and (rsi_5m > rsi_1h + sell_custom_stoploss_long_rsi_diff_2) and (sma_200_dec_24) and (barsFromLong >= 240)
+sell_duration_main(current_profit, barsFromLong) =>
+    is_valid = false, name = ""
+    if (sell_pump_24_1 and (0.2 > current_profit) and (current_profit > 0.07) and barsFromLong <= 6)
+        is_valid := true, name := "signal_profit_p_s_1"
+    else if ((sell_custom_long_profit_min_1 < current_profit) and (current_profit < sell_custom_long_profit_max_1) and barsFromLong > sell_custom_long_duration_min_1)
+        is_valid := true, name := "signal_profit_l_1"
+    else
+        is_valid := false, name := ""
 
-//     strategy.close(id="Long", comment="signal_stoploss_l_r_u_1", when=signal_stoploss_l_r_u_1)
-//     strategy.close(id="Long", comment="signal_stoploss_l_r_u_2", when=signal_stoploss_l_r_u_2)
+    [is_valid, name]
 
-//     signal_profit_p_d_1 = (sell_custom_pump_dec_profit_max_1 > current_profit) and (current_profit > sell_custom_pump_dec_profit_min_1) and (sell_pump_48_1) and (sma_200_dec_20) and (close < ema_200)
-//     signal_profit_p_d_2 = (sell_custom_pump_dec_profit_max_2 > current_profit) and (current_profit > sell_custom_pump_dec_profit_min_2) and (sell_pump_48_2) and (sma_200_dec_20) and (close < ema_200)
-//     signal_profit_p_d_3 = (sell_custom_pump_dec_profit_max_3 > current_profit) and (current_profit > sell_custom_pump_dec_profit_min_3) and (sell_pump_48_3) and (sma_200_dec_20) and (close < ema_200)
-//     signal_profit_p_d_4 = (sell_custom_pump_dec_profit_max_4 > current_profit) and (current_profit > sell_custom_pump_dec_profit_min_4) and (sell_pump_24_2) and (sma_200_dec_20)
+sell_under_min(current_profit) =>
+    is_valid = false, name = ""
+    if (current_profit > 0.0 and close < ema_200 and (((ema_200 - close)/close) < sell_custom_profit_under_rel_1) and (rsi_5m > (rsi_1h + sell_custom_profit_under_rsi_diff_1)))
+        is_valid := true, name := "signal_profit_u_e_1"
+    else
+        is_valid := false, name := ""
 
-//     strategy.close(id="Long", comment="signal_profit_p_d_1", when=signal_profit_p_d_1)
-//     strategy.close(id="Long", comment="signal_profit_p_d_2", when=signal_profit_p_d_2)
-//     strategy.close(id="Long", comment="signal_profit_p_d_3", when=signal_profit_p_d_3)
-//     strategy.close(id="Long", comment="signal_profit_p_d_4", when=signal_profit_p_d_4)
+    [is_valid, name]
 
-//     // # Pumped 48h 1, under EMA200
-//     signal_profit_p_u_1 = (sell_custom_pump_under_profit_max_1 > current_profit) and (current_profit > sell_custom_pump_under_profit_min_1) and (sell_pump_48_1) and (close < ema_200)
-//     strategy.close(id="Long", comment="signal_profit_p_u_1", when=signal_profit_p_u_1)
+sell_stoploss(current_profit, max_profit, max_loss, barsFromLong) =>
+    is_valid = false, name = ""
+
+    if (current_profit < 0.0 and sma_200_dec_24 and cmf_5m < 0.0 and close < ema_200 and ema_25 < ema_50 and barsFromLong > 144 and (rsi_5m > (rsi_1h + sell_custom_stoploss_under_rsi_diff_1)) and (((ema_200 - close)/close) < sell_custom_stoploss_under_rel_1))
+        is_valid := true, name := "signal_stoploss_u_1"
+    else if (-0.03 > current_profit and current_profit > -0.07 and (btc_not_downtrend_1h == false) and max_profit < 0.005 and sma_200_dec_24 and cmf_5m < 0.0 and close < ema_200 and ema_25 < ema_50)
+        is_valid := true, name := "signal_stoploss_u_b_1"
+
+    else if (sell_custom_stoploss_long_profit_min_1 < current_profit and current_profit < sell_custom_stoploss_long_profit_max_1 and current_profit > (-max_loss + sell_custom_stoploss_long_recover_1) and close < ema_200 and cmf_5m < 0.0 and rsi_5m > (rsi_1h + sell_custom_stoploss_long_rsi_diff_1) and sma_200_dec_24 and barsFromLong > 240)
+        is_valid := true, name := "signal_stoploss_l_r_u_1"
+    else if (current_profit < 0.0 and current_profit > (-max_loss + sell_custom_stoploss_long_recover_2) and close < ema_200 and cmf_5m < 0.0 and rsi_5m > (rsi_1h + sell_custom_stoploss_long_rsi_diff_2) and sma_200_dec_24 and barsFromLong > 240)
+        is_valid := true, name := "signal_stoploss_l_r_u_2"
+
+    else if (max_profit < sell_custom_stoploss_pump_max_profit_2 and current_profit < sell_custom_stoploss_pump_loss_2 and sell_pump_48_1 and close < (ema_200 * sell_custom_stoploss_pump_ma_offset_2) and cmf_5m < 0.0)
+        is_valid := true, name := "signal_stoploss_p_2"
+    else if (max_profit < sell_custom_stoploss_pump_max_profit_3 and current_profit < sell_custom_stoploss_pump_loss_3 and sell_pump_36_3 and close < (ema_200 * sell_custom_stoploss_pump_ma_offset_3))
+        is_valid := true, name := "signal_stoploss_p_3"
+    else
+        is_valid := false, name := ""
+
+    [is_valid, name]
+
+sell_pump_dec(current_profit) =>
+    is_valid = false, name = ""
+
+    if (sell_custom_pump_dec_profit_max_1 > current_profit and current_profit > sell_custom_pump_dec_profit_min_1 and sell_pump_48_1 and sma_200_dec_20 and close < ema_200)
+        is_valid := true, name := "signal_profit_p_d_1"
+    else if (sell_custom_pump_dec_profit_max_2 > current_profit and current_profit > sell_custom_pump_dec_profit_min_2 and sell_pump_48_2 and sma_200_dec_20 and close < ema_200)
+        is_valid := true, name := "signal_profit_p_d_2"
+    else if (sell_custom_pump_dec_profit_max_3 > current_profit and current_profit > sell_custom_pump_dec_profit_min_3 and sell_pump_48_3 and sma_200_dec_20 and close < ema_200)
+        is_valid := true, name := "signal_profit_p_d_3"
+    else if (sell_custom_pump_dec_profit_max_4 > current_profit and current_profit > sell_custom_pump_dec_profit_min_4 and sell_pump_24_2 and sma_200_dec_20)
+        is_valid := true, name := "signal_profit_p_d_4"
+    else
+        is_valid := false, name := ""
+
+    [is_valid, name]
+
+sell_pump_extra(current_profit, max_profit) =>
+    is_valid = false, name = ""
+
+    if (sell_custom_pump_under_profit_max_1 > current_profit and current_profit > sell_custom_pump_under_profit_min_1 and sell_pump_48_1 and close < ema_200)
+        is_valid := true, name := "signal_profit_p_u_1"
     
-//     // # Pumped 36h 2, trail 1
-//     signal_profit_p_t_1 = (sell_pump_36_2) and (sell_custom_pump_trail_profit_max_1 > current_profit) and (current_profit > sell_custom_pump_trail_profit_min_1) and (sell_custom_pump_trail_rsi_min_1 < rsi_5m) and (rsi_5m < sell_custom_pump_trail_rsi_max_1) and (max_profit > (current_profit + sell_custom_pump_trail_down_1))
-//     strategy.close(id="Long", comment="signal_profit_p_t_1", when=signal_profit_p_t_1)
+    else if (sell_pump_36_2 and sell_custom_pump_trail_profit_max_1 > current_profit and current_profit > sell_custom_pump_trail_profit_min_1 and sell_custom_pump_trail_rsi_min_1 < rsi_5m and rsi_5m < sell_custom_pump_trail_rsi_max_1 and max_profit > (current_profit + sell_custom_pump_trail_down_1))
+        is_valid := true, name := "signal_profit_p_t_1"
+
+    else
+        is_valid := false, name := ""
+
+    [is_valid, name]
+
+sell_recover(current_profit, max_loss) =>
+    is_valid = false, name = ""
+
+    if (max_loss > sell_custom_recover_min_loss_1 and current_profit > sell_custom_recover_profit_1)
+        is_valid := true, name := "signal_profit_r_1"
+    else if (max_loss > sell_custom_recover_min_loss_2 and sell_custom_recover_profit_max_2 > current_profit and current_profit > sell_custom_recover_profit_min_2 and rsi_5m < sell_custom_recover_rsi_2 and ema_25 < ema_50)
+        is_valid := true, name := "signal_profit_r_2"
+    else
+        is_valid := false, name := ""
+
+    [is_valid, name]
+
+sell_r_1(current_profit) =>
+    is_valid = false, name = ""
+
+    if (0.02 > current_profit and current_profit > 0.012 and r_480_5m > -2.0)
+        is_valid := true, name := "signal_profit_w_1_1"
+    else if (0.03 > current_profit and current_profit > 0.02 and r_480_5m > -2.1)
+        is_valid := true, name := "signal_profit_w_1_2"
+    else if (0.04 > current_profit and current_profit > 0.03 and r_480_5m > -2.2)
+        is_valid := true, name := "signal_profit_w_1_3"
+    else if (0.05 > current_profit and current_profit > 0.04 and r_480_5m > -2.3)
+        is_valid := true, name := "signal_profit_w_1_4"
+    else if (0.06 > current_profit and current_profit > 0.05 and r_480_5m > -2.4)
+        is_valid := true, name := "signal_profit_w_1_5"
+    else if (0.07 > current_profit and current_profit > 0.06 and r_480_5m > -2.5)
+        is_valid := true, name := "signal_profit_w_1_6"
+    else if (0.08 > current_profit and current_profit > 0.07 and r_480_5m > -2.6)
+        is_valid := true, name := "signal_profit_w_1_7"
+    else if (0.09 > current_profit and current_profit > 0.08 and r_480_5m > -5.5)
+        is_valid := true, name := "signal_profit_w_1_8"
+    else if (0.1 > current_profit and current_profit > 0.09 and r_480_5m > -3.0)
+        is_valid := true, name := "signal_profit_w_1_9"
+    else if (0.12 > current_profit and current_profit > 0.1 and r_480_5m > -8.0)
+        is_valid := true, name := "signal_profit_w_1_10"
+    else if (0.2 > current_profit and current_profit > 0.12 and r_480_5m > -2.0 and rsi_5m > 78.0)
+        is_valid := true, name := "signal_profit_w_1_11"
+    else if (current_profit > 0.2 and r_480_5m > -1.5 and rsi_5m > 80.0)
+        is_valid := true, name := "signal_profit_w_1_12"
+    else
+        is_valid := false, name := ""
+
+    [is_valid, name]
+
+sell_r_2(current_profit) =>
+    is_valid = false, name = ""
+
+    if (0.02 > current_profit and current_profit > 0.012 and r_480_5m > -4.0 and rsi_5m > 78 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_1"
+    else if (0.03 > current_profit and current_profit > 0.02 and r_480_5m > -4.5 and rsi_5m > 78 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_2"
+    else if (0.04 > current_profit and current_profit > 0.03 and r_480_5m > -5 and rsi_5m > 78 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_3"
+    else if (0.05 > current_profit and current_profit > 0.04 and r_480_5m > -5.5 and rsi_5m > 78 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_4"
+    else if (0.06 > current_profit and current_profit > 0.05 and r_480_5m > -6 and rsi_5m > 78 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_5"
+    else if (0.07 > current_profit and current_profit > 0.06 and r_480_5m > -30.0 and rsi_5m > 79 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_6"
+    else if (0.08 > current_profit and current_profit > 0.07 and r_480_5m > -34.0 and rsi_5m > 80 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_7"
+    else if (0.09 > current_profit and current_profit > 0.08 and r_480_5m > -7.0 and rsi_5m > 80.5 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_8"
+    else if (0.1 > current_profit and current_profit > 0.09 and r_480_5m > -6.0 and rsi_5m > 80.5 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_9"
+    else if (0.12 > current_profit and current_profit > 0.1 and r_480_5m > -5.0 and rsi_5m > 80.5 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_10"
+    else if (0.2 > current_profit and current_profit > 0.12 and r_480_5m > -4.0 and rsi_5m > 81 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_11"
+    else if (current_profit > 0.2 and  r_480_5m > -3.0 and rsi_5m > 81.5 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_2_12"
+    else
+        is_valid := false, name := ""
+
+    [is_valid, name]
+
+sell_r_3(current_profit) => 
+    is_valid = false, name = ""
+
+    if (0.02 > current_profit and current_profit > 0.012 and r_480_5m > -6 and rsi_5m > 74 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_3_1"
+    else if (0.03 > current_profit and current_profit > 0.02 and r_480_5m > -8 and rsi_5m > 74 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_3_2"
+    else if (0.04 > current_profit and current_profit > 0.03 and r_480_5m > -29 and rsi_5m > 74 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_3_3"
+    else if (0.05 > current_profit and current_profit > 0.04 and r_480_5m > -30 and rsi_5m > 74 and stochrsi_fastk_96 > 99 and stochrsi_fastd_96 > 99)
+        is_valid := true, name := "signal_profit_w_3_4"
+    else
+        is_valid := false, name := ""
+
+    [is_valid, name]
+
+if (strategy.position_size > 0)
+    current_profit = ((close - strategy.position_avg_price) / strategy.position_avg_price)
+
+    wasLongEntry = strategy.position_size > 0 and strategy.position_size != strategy.position_size[1]
+    barsFromLong = barssince(wasLongEntry)
+    priorbars = barsFromLong != na ? (barsFromLong + 1) : 1
+    highest_high = highest(priorbars)
+    lowest_low = lowest(priorbars)
+
+    max_profit = ((highest_high - strategy.position_avg_price) / strategy.position_avg_price)
+    max_loss = ((strategy.position_avg_price - lowest_low) / lowest_low)
+
+    [should_sell_01, signal_name_01] = sell_over_main(current_profit)
+    [should_sell_02, signal_name_02] = sell_under_main(current_profit)
+    [should_sell_03, signal_name_03] = sell_pump_main(current_profit)
+    [should_sell_04, signal_name_04] = sell_dec_main(current_profit)
+    [should_sell_05, signal_name_05] = sell_trail_main(current_profit, max_profit)
+    [should_sell_06, signal_name_06] = sell_duration_main(current_profit, barsFromLong)
+    [should_sell_07, signal_name_07] = sell_under_min(current_profit)
+    [should_sell_08, signal_name_08] = sell_stoploss(current_profit, max_profit, max_loss, barsFromLong)
+    [should_sell_09, signal_name_09] = sell_pump_dec(current_profit)
+    [should_sell_10, signal_name_10] = sell_pump_extra(current_profit, max_profit)
+    [should_sell_11, signal_name_11] = sell_recover(current_profit, max_loss)
+    [should_sell_12, signal_name_12] = sell_r_1(current_profit)
+    [should_sell_13, signal_name_13] = sell_r_2(current_profit)
+    [should_sell_14, signal_name_14] = sell_r_3(current_profit)
+
+
+    strategy.close(id="Long", comment=signal_name_01, when=should_sell_01)
+    strategy.close(id="Long", comment=signal_name_02, when=should_sell_02)
+    strategy.close(id="Long", comment=signal_name_03, when=should_sell_03)
+    strategy.close(id="Long", comment=signal_name_04, when=should_sell_04)
+    strategy.close(id="Long", comment=signal_name_05, when=should_sell_05)
+    strategy.close(id="Long", comment=signal_name_06, when=should_sell_06)
+    strategy.close(id="Long", comment=signal_name_07, when=should_sell_07)
+    strategy.close(id="Long", comment=signal_name_08, when=should_sell_08)
+    strategy.close(id="Long", comment=signal_name_09, when=should_sell_09)
+    strategy.close(id="Long", comment=signal_name_10, when=should_sell_10)
+    strategy.close(id="Long", comment=signal_name_11, when=should_sell_11)
+    strategy.close(id="Long", comment=signal_name_12, when=should_sell_12)
+    strategy.close(id="Long", comment=signal_name_13, when=should_sell_13)
+    strategy.close(id="Long", comment=signal_name_14, when=should_sell_14)
     
-//     // signal_stoploss_p_1 = (max_profit < sell_custom_stoploss_pump_max_profit_1) and (sell_custom_stoploss_pump_min_1 < current_profit) and (current_profit < sell_custom_stoploss_pump_max_1) and (sell_pump_48_1) and (sma_200_dec_20) and (close < (ema_200 * sell_custom_stoploss_pump_ma_offset_1))
-
-//     signal_stoploss_p_2 = (max_profit < sell_custom_stoploss_pump_max_profit_2) and (current_profit < sell_custom_stoploss_pump_loss_2) and (sell_pump_48_1) and (sma_200_dec_20_1h) and (close < (ema_200 * sell_custom_stoploss_pump_ma_offset_2))
-//     signal_stoploss_p_3 = (max_profit < sell_custom_stoploss_pump_max_profit_3) and (current_profit < sell_custom_stoploss_pump_loss_3) and (sell_pump_36_3) and (close < (ema_200 * sell_custom_stoploss_pump_ma_offset_3))
-
-//     strategy.close(id="Long", comment="signal_stoploss_p_2", when=signal_stoploss_p_2)
-//     strategy.close(id="Long", comment="signal_stoploss_p_3", when=signal_stoploss_p_3)
     
-//     // # Recover
-//     signal_profit_r_1 = (max_loss > sell_custom_recover_min_loss_1) and (current_profit > sell_custom_recover_profit_1)
-//     signal_profit_r_2 = (max_loss > sell_custom_recover_min_loss_2) and (sell_custom_recover_profit_max_2 > current_profit) and (current_profit > sell_custom_recover_profit_min_2) and (rsi_5m < sell_custom_recover_rsi_2)
-
-//     strategy.close(id="Long", comment="signal_profit_r_1", when=signal_profit_r_1)
-//     strategy.close(id="Long", comment="signal_profit_r_2", when=signal_profit_r_2)
-    
-//     // # Take profit for long duration trades
-//     signal_profit_l_1 = (sell_custom_long_profit_min_1 < current_profit) and (current_profit < sell_custom_long_profit_max_1) and (barsFromLong > (sell_custom_long_duration_min_1/5))
-//     strategy.close(id="Long", comment="signal_profit_l_1", when=signal_profit_l_1)
-
-//     strategy.close(id="Long", comment="Exit", when=sell_01_logic)
-//     strategy.close(id="Long", comment="Exit", when=sell_02_logic)
-//     strategy.close(id="Long", comment="Exit", when=sell_03_logic)
-//     strategy.close(id="Long", comment="Exit", when=sell_04_logic)
-//     strategy.close(id="Long", comment="Exit", when=sell_06_logic)
-//     strategy.close(id="Long", comment="Exit", when=sell_07_logic)
-//     strategy.close(id="Long", comment="Exit", when=sell_08_logic)
+    strategy.close(id="Long", comment="Exit", when=sell_01_logic)
+    strategy.close(id="Long", comment="Exit", when=sell_02_logic)
+    // strategy.close(id="Long", comment="Exit", when=sell_03_logic)
+    strategy.close(id="Long", comment="Exit", when=sell_04_logic)
+    strategy.close(id="Long", comment="Exit", when=sell_06_logic)
+    strategy.close(id="Long", comment="Exit", when=sell_07_logic)
+    strategy.close(id="Long", comment="Exit", when=sell_08_logic)
