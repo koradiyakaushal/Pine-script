@@ -20,19 +20,19 @@
 
 //@version=4
 
-SystemName = "NFI v7.2"
+SystemName = "NFI v7.2 Strategy"
 is_overlay = true
 InitCapital = 100
 InitPosition = 100
 InitCommission = 0
 CalcOnorderFills = false
 
-// strategy(title=SystemName, shorttitle=SystemName, 
-//  initial_capital=InitCapital, default_qty_type=strategy.percent_of_equity, 
-//  default_qty_value=InitPosition,commission_type=strategy.commission.percent, commission_value=InitCommission, calc_on_order_fills=CalcOnorderFills, 
-//  precision=6, max_lines_count=500, max_labels_count=500, overlay=is_overlay, max_bars_back=20)
+strategy(title=SystemName, shorttitle=SystemName, 
+ initial_capital=InitCapital, default_qty_type=strategy.percent_of_equity, 
+ default_qty_value=InitPosition,commission_type=strategy.commission.percent, commission_value=InitCommission, calc_on_order_fills=CalcOnorderFills, 
+ precision=6, max_lines_count=500, max_labels_count=500, overlay=is_overlay, max_bars_back=20)
 
-study(SystemName, overlay=true)
+// study(SystemName, overlay=true)
 // ————— Date range filtering
 
 informative_tf = input(title="Informative Timeframe", type=input.resolution, defval="60")
