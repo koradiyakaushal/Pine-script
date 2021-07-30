@@ -1,0 +1,143 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// @version=4
+
+SystemName = "Moon Phase"
+InitCapital = 1000
+InitPosition = 100
+InitCommission = 0
+CalcOnorderFills = false
+is_overlay = true
+
+strategy(title=SystemName, shorttitle=SystemName, 
+ initial_capital=InitCapital, default_qty_type=strategy.percent_of_equity, 
+ default_qty_value=InitPosition,commission_type=strategy.commission.percent, commission_value=InitCommission, calc_on_order_fills=CalcOnorderFills, 
+ precision=6, max_lines_count=500, max_labels_count=500, overlay=is_overlay, max_bars_back=20)
+
+DateFilter      = input(true, "═════════════ Backtest Date Range Filtering", group="Date")
+
+i_startTime = input(defval = timestamp("01 Jan 2021 00:00 +0000"), title = "Start Time", type = input.time, group="Date")
+i_endTime = input(defval = timestamp("30 Dec 2021 23:30 +0000"), title = "End Time", type = input.time, group="Date")
+
+TradeDateIsAllowed() => DateFilter ? time >= i_startTime and time <= i_endTime : true
+
+// INPUT    --- {
+
+fillBackground = input(true, "Fill Background?")
+
+//} --- INPUT
+
+_STOPLOSS = input(5, type=input.float, title="stop loss(%)")
+
+// FUNCTION --- {
+
+normalize(_v) =>
+    x = _v
+    x := x - floor(x)
+    if x < 0
+        x := x + 1
+    x
+
+calcPhase(_year, _month, _day) =>
+
+    int y = na
+    int m = na
+    float k1 = na 
+    float k2 = na 
+    float k3 = na
+    float jd = na
+    float ip = na
+
+    y := _year - floor((12 - _month) / 10)       
+    m := _month + 9
+    if m >= 12 
+        m := m - 12
+    
+    k1 := floor(365.25 * (y + 4712))
+    k2 := floor(30.6 * m + 0.5)
+    k3 := floor(floor((y / 100) + 49) * 0.75) - 38
+    
+    jd := k1 + k2 + _day + 59
+    if jd > 2299160
+        jd := jd - k3
+    
+    ip := normalize((jd - 2451550.1) / 29.530588853)
+    age = ip * 29.53
+
+//} --- FUNCTION
+
+// INIT     --- {
+
+age = calcPhase(year, month, dayofmonth)
+moon = 
+     floor(age)[1] > floor(age) ? 1 : 
+     floor(age)[1] < 15 and floor(age) >= 15 ? -1 : na
+
+//} --- INIT
+
+// PLOT     --- {
+
+plotshape(
+     moon==1, 
+     "Full Moon", 
+     shape.circle, 
+     location.top, 
+     color.new(color.white, 20), 
+     size=size.normal
+     )   
+
+plotshape(
+     moon==-1, 
+     "New Moon", 
+     shape.circle, 
+     location.bottom, 
+     color.new(color.gray, 20), 
+     size=size.normal
+     )   
+
+var color col = na
+if moon == 1 and fillBackground
+    col := color.navy
+if moon == -1 and fillBackground
+    col := color.gray
+
+bgcolor(col, title="Moon Phase")
+
+//} --- PLOT
+Entry_Type = "Both"
+stop_loss = 5
+
+long_entry  = (strategy.position_size == 0 and Entry_Type != "Sell" and TradeDateIsAllowed() and (moon[1]==-1))
+short_entry = (strategy.position_size == 0 and Entry_Type != "Buy" and TradeDateIsAllowed() and (moon[1]==1))
+
+long_exit = (strategy.position_size != 0 and moon==1)
+short_exit = (strategy.position_size != 0 and moon==-1)
+
+float _SL = na
+float _EP = na
+
+_EP         := (strategy.position_size != 0) ? _EP[1] : na
+_SL         := (strategy.position_size != 0) ? _SL[1] : na
+
+if long_entry
+    _EP := close
+    _SL := ((1-(_STOPLOSS/100))*close)
+
+if short_entry
+    _EP := close
+    _SL := ((1+(_STOPLOSS/100))*close)
+
+strategy.entry("Long", strategy.long, when=long_entry)
+strategy.close(id="Long", comment="tp", when=long_exit)
+
+strategy.entry("Short", strategy.short, when=short_entry)
+strategy.close(id="Short", comment="tp", when=short_exit)
+
+if (strategy.position_size > 0 and close < _SL)
+    strategy.close(id="Long", comment="sl", when=close)
+if (strategy.position_size < 0 and close > _SL)
+    strategy.close(id="Short", comment="sl", when=close)
+
+plot_EP = plot(_EP, title="Entry Level", color=color.blue,  linewidth=1, style=plot.style_linebr)
+plot_SL = plot(_SL, title="Stop Loss",   color=color.red,   linewidth=2, style=plot.style_linebr)
+
+fill(plot_SL, plot_EP, title="SL Background", color=color.red,   transp = 75)
